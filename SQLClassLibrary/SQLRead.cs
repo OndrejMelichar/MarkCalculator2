@@ -46,5 +46,19 @@ namespace SQLClassLibrary
             return await query.ToListAsync();
         }
 
+        public async Task<int> GetLastSameMarkId(Mark mark)
+        {
+            var data = await databaseConnection.QueryAsync<Mark>("select * from Mark where Value = ? AND Weight = ?", mark.Value, mark.Weight);
+            data.Reverse();
+            return data[0].MarkId;
+        }
+
+        public async Task<int> GetSubjectId(Subject subject)
+        {
+            var query = databaseConnection.Table<Subject>().Where(v => v.Name.Equals(subject.Name));
+            var data = await query.ToListAsync();
+            return data[0].SubjectId;
+        }
+
     }
 }

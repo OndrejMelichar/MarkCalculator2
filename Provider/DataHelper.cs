@@ -10,16 +10,11 @@ namespace Provider
 {
     public class DataHelper
     {
-        private string databaseName;
+        public static string DatabaseName = "database.db";
 
         private ObservableCollection<Subject> subjects = new ObservableCollection<Subject>();
         private List<Mark> marks = new List<Mark>();
         private Dictionary<Subject, ObservableCollection<Mark>> MarksBySubjects = new Dictionary<Subject, ObservableCollection<Mark>>();
-
-        public DataHelper(string databaseName)
-        {
-            this.databaseName = databaseName;
-        }
 
         public async Task<ObservableCollection<Subject>> GetSubjects()
         {
@@ -46,7 +41,7 @@ namespace Provider
             ObservableCollection<Mark> subjectMarks = new ObservableCollection<Mark>();
             List<Mark> allMarks = await this.getMarks();
             SQLReadFactory readFactory = new SQLReadFactory();
-            SQLRead SQLRead = await readFactory.GetInstance(this.databaseName);
+            SQLRead SQLRead = await readFactory.GetInstance(DataHelper.DatabaseName);
             List<Binding> SQLBindings = await SQLRead.GetBindings();
 
             foreach (Binding binding in SQLBindings)
@@ -73,7 +68,7 @@ namespace Provider
         private async Task<ObservableCollection<Subject>> getSubjectsFromDatabase()
         {
             SQLReadFactory readFactory = new SQLReadFactory();
-            SQLRead SQLRead = await readFactory.GetInstance(this.databaseName);
+            SQLRead SQLRead = await readFactory.GetInstance(DataHelper.DatabaseName);
             ObservableCollection<Subject> SQLSubjects = await SQLRead.GetSubjects();
             return SQLSubjects;
         }
@@ -81,7 +76,7 @@ namespace Provider
         private async Task<List<Mark>> getMarksFromDatabase()
         {
             SQLReadFactory readFactory = new SQLReadFactory();
-            SQLRead SQLRead = await readFactory.GetInstance(this.databaseName);
+            SQLRead SQLRead = await readFactory.GetInstance(DataHelper.DatabaseName);
             List<Mark> SQLMarks = await SQLRead.GetMarks();
             return SQLMarks;
         }
