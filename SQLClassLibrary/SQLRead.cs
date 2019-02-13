@@ -46,54 +46,5 @@ namespace SQLClassLibrary
             return await query.ToListAsync();
         }
 
-        /*public async Task<Mark> GetMarkByBinding(int bindingId)
-        {
-            AsyncTableQuery<Mark> query = databaseConnection.Table<Mark>().Where(v => v.MarkId.Equals(bindingId));
-            List<Mark> list = await query.ToListAsync();
-            return list[0];
-        }
-
-        public async Task<int> GetSubjectId(Subject subject)
-        {
-            var query = databaseConnection.Table<Subject>().Where(v => v.Name.Equals(subject.Name));
-            var data = await query.ToListAsync();
-
-            if (data.Count == 1)
-            {
-                return data[0].SubjectId;
-            }
-
-            // TODO chyba ve čtení databáze (? - vzít první, pokud vůbec existuje)
-            return 0;
-        }
-
-        public async Task<List<int>> GetMarkIds(int subjectId)
-        {
-            var query = databaseConnection.Table<Binding>().Where(v => v.SubjectId.Equals(subjectId));
-            var data = await query.ToListAsync();
-
-            List<int> ids = new List<int>();
-
-            foreach (Binding value in data)
-            {
-                ids.Add(value.MarkId);
-            }
-
-            return ids;
-        }*/
-
-        /*public async Task<int> GetLastMarkId(Mark mark)
-        {
-            var data = await databaseConnection.QueryAsync<Mark>("select * from Mark where Value = ? AND Weight = ?", mark.Value, mark.Weight);
-
-            if (data.Count != 0)
-            {
-                data.Reverse();
-                return data[0].MarkId;
-            }
-
-            return 0;
-        }*/
-
     }
 }

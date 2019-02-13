@@ -31,16 +31,6 @@ namespace Provider
             return this.subjects;
         }
 
-        private async Task<List<Mark>> getMarks()
-        {
-            if (this.marks.Count == 0)
-            {
-                return await this.getMarksFromDatabase();
-            }
-
-            return this.marks;
-        }
-
         public async Task<Dictionary<Subject, ObservableCollection<Mark>>> GetMarksBySubjects()
         {
             if (this.MarksBySubjects.Count == 0)
@@ -49,6 +39,35 @@ namespace Provider
             }
 
             return this.MarksBySubjects;
+        }
+
+        public async Task<ObservableCollection<Mark>> GetSubjectMarks(Subject subject)
+        {
+            ObservableCollection<Mark> subjectMarks = new ObservableCollection<Mark>();
+            List<Mark> allMarks = await this.getMarks();
+            SQLReadFactory readFactory = new SQLReadFactory();
+            SQLRead SQLRead = await readFactory.GetInstance(this.databaseName);
+            List<Binding> SQLBindings = await SQLRead.GetBindings();
+
+            foreach (Binding binding in SQLBindings)
+            {
+                if (binding.SubjectId == subject.SubjectId)
+                {
+                    subjectMarks.Add(this.getMarkById(binding.MarkId, allMarks));
+                }
+            }
+
+            return subjectMarks;
+        }
+
+        private async Task<List<Mark>> getMarks()
+        {
+            if (this.marks.Count == 0)
+            {
+                return await this.getMarksFromDatabase();
+            }
+
+            return this.marks;
         }
 
         private async Task<ObservableCollection<Subject>> getSubjectsFromDatabase()
@@ -78,25 +97,6 @@ namespace Provider
             }
 
             return dictionary;
-        }
-
-        public async Task<ObservableCollection<Mark>> GetSubjectMarks(Subject subject)
-        {
-            ObservableCollection<Mark> subjectMarks = new ObservableCollection<Mark>();
-            List<Mark> allMarks = await this.getMarks();
-            SQLReadFactory readFactory = new SQLReadFactory();
-            SQLRead SQLRead = await readFactory.GetInstance(this.databaseName);
-            List<Binding> SQLBindings = await SQLRead.GetBindings();
-
-            foreach (Binding binding in SQLBindings)
-            {
-                if (binding.SubjectId == subject.SubjectId)
-                {
-                    subjectMarks.Add(this.getMarkById(binding.MarkId, allMarks));
-                }
-            }
-
-            return subjectMarks;
         }
 
         private Mark getMarkById(int id, List<Mark> allMarks)
