@@ -16,16 +16,16 @@ namespace Provider
             this.dataHelper = new DataHelper();
         }
 
-        public async Task<ObservableCollection<Subject>> GetSubjects()
+        public async Task<List<Subject>> GetSubjects()
         {
             return await this.dataHelper.GetSubjects();
         }
 
-        public async Task<ObservableCollection<Mark>> GetSubjectMarks(Subject subject)
+        public async Task<List<Mark>> GetSubjectMarks(Subject subject)
         {
-            Dictionary<Subject, ObservableCollection<Mark>> marksBySubjects = await this.dataHelper.GetMarksBySubjects();
+            Dictionary<Subject, List<Mark>> marksBySubjects = await this.dataHelper.GetMarksBySubjects();
             List<Subject> keys = new List<Subject>(marksBySubjects.Keys);
-            List<ObservableCollection<Mark>> marks = new List<ObservableCollection<Mark>>(marksBySubjects.Values);
+            List<List<Mark>> marks = new List<List<Mark>>(marksBySubjects.Values);
             int index = keys.IndexOf(subject);
             return marks[index];
         }
@@ -39,7 +39,7 @@ namespace Provider
         public async Task<Status> GetTotalStatus()
         {
             float totalStatus = 0f;
-            ObservableCollection<Subject> subjects = await this.GetSubjects();
+            List<Subject> subjects = await this.GetSubjects();
 
             if (subjects.Count != 0)
             {
@@ -70,7 +70,7 @@ namespace Provider
             return Status.Passed;
         }
 
-        public float GetMarksAverage(ObservableCollection<Mark> marks)
+        public float GetMarksAverage(List<Mark> marks)
         {
             float marksWeightsSum = 0;
             int weightsSum = 0;

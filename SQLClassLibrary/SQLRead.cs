@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,11 +26,10 @@ namespace SQLClassLibrary
             await databaseConnection.CreateTableAsync<Binding>();
         }
 
-        public async Task<ObservableCollection<Subject>> GetSubjects()
+        public async Task<List<Subject>> GetSubjects()
         {
             AsyncTableQuery<Subject> query = databaseConnection.Table<Subject>();
-            List<Subject> queryList = await query.ToListAsync();
-            return new ObservableCollection<Subject>(queryList);
+            return await query.ToListAsync();
         }
 
         public async Task<List<Mark>> GetMarks()

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 using Entities;
@@ -12,11 +11,11 @@ namespace Provider
     {
         public static string DatabaseName = "database.db";
 
-        private ObservableCollection<Subject> subjects = new ObservableCollection<Subject>();
+        private List<Subject> subjects = new List<Subject>();
         private List<Mark> marks = new List<Mark>();
-        private Dictionary<Subject, ObservableCollection<Mark>> MarksBySubjects = new Dictionary<Subject, ObservableCollection<Mark>>();
+        private Dictionary<Subject, List<Mark>> MarksBySubjects = new Dictionary<Subject, List<Mark>>();
 
-        public async Task<ObservableCollection<Subject>> GetSubjects()
+        public async Task<List<Subject>> GetSubjects()
         {
             if (this.subjects.Count == 0)
             {
@@ -26,7 +25,7 @@ namespace Provider
             return this.subjects;
         }
 
-        public async Task<Dictionary<Subject, ObservableCollection<Mark>>> GetMarksBySubjects()
+        public async Task<Dictionary<Subject, List<Mark>>> GetMarksBySubjects()
         {
             if (this.MarksBySubjects.Count == 0)
             {
@@ -36,9 +35,9 @@ namespace Provider
             return this.MarksBySubjects;
         }
 
-        public async Task<ObservableCollection<Mark>> GetSubjectMarks(Subject subject)
+        public async Task<List<Mark>> GetSubjectMarks(Subject subject)
         {
-            ObservableCollection<Mark> subjectMarks = new ObservableCollection<Mark>();
+            List<Mark> subjectMarks = new List<Mark>();
             List<Mark> allMarks = await this.getMarks();
             SQLReadFactory readFactory = new SQLReadFactory();
             SQLRead SQLRead = await readFactory.GetInstance(DataHelper.DatabaseName);
@@ -65,11 +64,11 @@ namespace Provider
             return this.marks;
         }
 
-        private async Task<ObservableCollection<Subject>> getSubjectsFromDatabase()
+        private async Task<List<Subject>> getSubjectsFromDatabase()
         {
             SQLReadFactory readFactory = new SQLReadFactory();
             SQLRead SQLRead = await readFactory.GetInstance(DataHelper.DatabaseName);
-            ObservableCollection<Subject> SQLSubjects = await SQLRead.GetSubjects();
+            List<Subject> SQLSubjects = await SQLRead.GetSubjects();
             return SQLSubjects;
         }
 
@@ -81,10 +80,10 @@ namespace Provider
             return SQLMarks;
         }
 
-        private async Task<Dictionary<Subject, ObservableCollection<Mark>>> getMarksBySubjectsFromDatabase()
+        private async Task<Dictionary<Subject, List<Mark>>> getMarksBySubjectsFromDatabase()
         {
-            ObservableCollection<Subject> SQLSubjects = await this.GetSubjects();
-            Dictionary<Subject, ObservableCollection<Mark>> dictionary = new Dictionary<Subject, ObservableCollection<Mark>>();
+            List<Subject> SQLSubjects = await this.GetSubjects();
+            Dictionary<Subject, List<Mark>> dictionary = new Dictionary<Subject, List<Mark>>();
 
             foreach (Subject subject in SQLSubjects)
             {
