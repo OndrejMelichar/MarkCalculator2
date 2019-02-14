@@ -16,9 +16,9 @@
                 <ListView x:Name="subjectsListView">
                     <ListView.ItemTemplate>
                         <DataTemplate>
+                                    
                             <ViewCell>
                                 <Grid HeightRequest="48">
-                                    
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>

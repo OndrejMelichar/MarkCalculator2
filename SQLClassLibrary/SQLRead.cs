@@ -23,7 +23,6 @@ namespace SQLClassLibrary
         {
             await databaseConnection.CreateTableAsync<Mark>();
             await databaseConnection.CreateTableAsync<Subject>();
-            await databaseConnection.CreateTableAsync<Binding>();
         }
 
         public async Task<List<Subject>> GetSubjects()
@@ -36,19 +35,6 @@ namespace SQLClassLibrary
         {
             AsyncTableQuery<Mark> query = databaseConnection.Table<Mark>();
             return await query.ToListAsync();
-        }
-
-        public async Task<List<Binding>> GetBindings()
-        {
-            AsyncTableQuery<Binding> query = databaseConnection.Table<Binding>();
-            return await query.ToListAsync();
-        }
-
-        public async Task<int> GetLastSameMarkId(Mark mark)
-        {
-            var data = await databaseConnection.QueryAsync<Mark>("select * from Mark where Value = ? AND Weight = ?", mark.Value, mark.Weight);
-            data.Reverse();
-            return data[0].MarkId;
         }
 
         public async Task<int> GetSubjectId(Subject subject)

@@ -15,6 +15,26 @@ namespace Provider
         private List<Mark> marks = new List<Mark>();
         private Dictionary<Subject, List<Mark>> MarksBySubjects = new Dictionary<Subject, List<Mark>>();
 
+        public async Task AddSubject(Subject subject)
+        {
+            SQLWriteFactory writeFactory = new SQLWriteFactory();
+            SQLWrite SQLWrite = await writeFactory.GetInstance(DataHelper.DatabaseName);
+            await SQLWrite.AddSubject(subject);
+            this.subjects.Add(subject);
+            this.MarksBySubjects.Add(subject, new List<Mark>());
+        }
+
+        public async Task AddMark(Mark mark, Subject subject)
+        {
+            SQLReadFactory readFactory = new SQLReadFactory();
+            SQLRead SQLRead = await readFactory.GetInstance(DataHelper.DatabaseName);
+            int subjectId = await SQLRead.GetSubjectId(subject);
+            mark.SubjectId = subjectId;
+            SQLWriteFactory writeFactory = new SQLWriteFactory();
+            SQLWrite SQLWrite = await writeFactory.GetInstance(DataHelper.DatabaseName);
+            await SQLWrite.AddMark(mark);
+        }
+
         public async Task<List<Subject>> GetSubjects()
         {
             if (this.subjects.Count == 0)
@@ -39,15 +59,12 @@ namespace Provider
         {
             List<Mark> subjectMarks = new List<Mark>();
             List<Mark> allMarks = await this.getMarks();
-            SQLReadFactory readFactory = new SQLReadFactory();
-            SQLRead SQLRead = await readFactory.GetInstance(DataHelper.DatabaseName);
-            List<Binding> SQLBindings = await SQLRead.GetBindings();
 
-            foreach (Binding binding in SQLBindings)
+            foreach (Mark mark in allMarks)
             {
-                if (binding.SubjectId == subject.SubjectId)
+                if (mark.SubjectId == subject.SubjectId)
                 {
-                    subjectMarks.Add(this.getMarkById(binding.MarkId, allMarks));
+                    subjectMarks.Add(mark);
                 }
             }
 
@@ -91,19 +108,6 @@ namespace Provider
             }
 
             return dictionary;
-        }
-
-        private Mark getMarkById(int id, List<Mark> allMarks)
-        {
-            foreach (Mark mark in allMarks)
-            {
-                if (mark.MarkId == id)
-                {
-                    return mark;
-                }
-            }
-
-            return null;
         }
 
     }

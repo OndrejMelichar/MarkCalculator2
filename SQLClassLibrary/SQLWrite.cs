@@ -23,21 +23,14 @@ namespace SQLClassLibrary
         {
             await databaseConnection.CreateTableAsync<Mark>();
             await databaseConnection.CreateTableAsync<Subject>();
-            await databaseConnection.CreateTableAsync<Binding>();
         }
 
-        public async void AddMark(Mark mark, Subject subject, string databaseName)
+        public async Task AddMark(Mark mark)
         {
             await databaseConnection.InsertAsync(mark);
-            SQLReadFactory readFactory = new SQLReadFactory();
-            SQLRead SQLRead = await readFactory.GetInstance(databaseName);
-            int newMarkId = await SQLRead.GetLastSameMarkId(mark);
-            int subjectId = await SQLRead.GetSubjectId(subject);
-
-            await databaseConnection.InsertAsync(new Binding() { SubjectId = subjectId, MarkId = newMarkId });
         }
 
-        public async void AddSubject(Subject subject)
+        public async Task AddSubject(Subject subject)
         {
             await databaseConnection.InsertAsync(subject);
         }

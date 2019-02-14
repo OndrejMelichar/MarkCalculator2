@@ -20,6 +20,16 @@ namespace Provider
         {
             return await this.dataHelper.GetSubjects();
         }
+        
+        public async Task AddSubject(Subject subject)
+        {
+            await this.dataHelper.AddSubject(subject);
+        }
+
+        public async Task AddMark(Mark mark, Subject subject)
+        {
+            await this.dataHelper.AddMark(mark, subject);
+        }
 
         public async Task<List<Mark>> GetSubjectMarks(Subject subject)
         {
