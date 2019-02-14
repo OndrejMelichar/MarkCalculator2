@@ -21,15 +21,19 @@ namespace MarkCalculator2
             this.studentBook = new StudentBook();
 
             Task.Run(async () => {
+                await this.studentBook.AddSubject(new Subject() { Name = "Matematika" });
+                await this.studentBook.AddSubject(new Subject() { Name = "Český jazyk" });
+                await this.studentBook.AddSubject(new Subject() { Name = "Základy společenských věd" });
                 await this.displaySubjects();
+                await this.studentBook.AddSubject(new Subject() { Name = "Tělesná výchova" });
             }).Wait();
         }
 
         private async Task displaySubjects()
         {
             List<Subject> subjects = await this.studentBook.GetSubjects();
-            ObservableCollection<SubjectListViewItem> listViewCollection = await this.subjectsToListViewCollection(subjects);
-            subjectsListView.ItemsSource = listViewCollection;
+            StudentBook.SubjectsObservable = await this.subjectsToListViewCollection(subjects);
+            subjectsListView.ItemsSource = StudentBook.SubjectsObservable;
         }
 
         private async Task<ObservableCollection<SubjectListViewItem>> subjectsToListViewCollection(List<Subject> subjects)

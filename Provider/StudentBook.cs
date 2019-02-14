@@ -9,6 +9,7 @@ namespace Provider
 {
     public class StudentBook
     {
+        public static ObservableCollection<SubjectListViewItem> SubjectsObservable = new ObservableCollection<SubjectListViewItem>();
         private DataHelper dataHelper;
 
         public StudentBook()

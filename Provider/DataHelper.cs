@@ -22,6 +22,7 @@ namespace Provider
             await SQLWrite.AddSubject(subject);
             this.subjects.Add(subject);
             this.MarksBySubjects.Add(subject, new List<Mark>());
+            StudentBook.SubjectsObservable.Add(new SubjectListViewItem() { SubjectName = subject.Name, Average = 0f } );
         }
 
         public async Task AddMark(Mark mark, Subject subject)

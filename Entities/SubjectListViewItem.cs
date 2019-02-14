@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MarkCalculator2
+namespace Entities
 {
     public class SubjectListViewItem
     {
