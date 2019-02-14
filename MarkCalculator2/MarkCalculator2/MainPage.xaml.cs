@@ -49,5 +49,10 @@ namespace MarkCalculator2
 
             return collection;
         }
+
+        private async void subjectTapped(object sender, ItemTappedEventArgs e)
+        {
+            await Navigation.PushModalAsync(new SubjectDetailPage());
+        }
     }
 }

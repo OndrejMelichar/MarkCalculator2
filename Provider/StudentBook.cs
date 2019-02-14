@@ -10,6 +10,7 @@ namespace Provider
     public class StudentBook
     {
         public static ObservableCollection<SubjectListViewItem> SubjectsObservable = new ObservableCollection<SubjectListViewItem>();
+        public static ObservableCollection<MarkListViewItem> SubjectMarksObservable = new ObservableCollection<MarkListViewItem>();
         private DataHelper dataHelper;
 
         public StudentBook()

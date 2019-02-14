@@ -13,10 +13,10 @@
                 <Label HorizontalOptions="EndAndExpand" />
             </StackLayout>
             <StackLayout>
-                <ListView x:Name="subjectsListView">
+                <ListView x:Name="subjectsListView" ItemTapped="subjectTapped">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                                    
+                                   
                             <ViewCell>
                                 <Grid HeightRequest="48">
                                     <Grid.RowDefinitions>
@@ -27,11 +27,12 @@
                                         <ColumnDefinition Width="48" />
                                     </Grid.ColumnDefinitions>
 
-                                    <Label Text="{Binding SubjectName}" Grid.Row="0"  Grid.Column="0" FontFamily="Roboto" FontSize="Medium" TextColor="Black" VerticalTextAlignment="Center" />
-                                    <Label Text="{Binding Average}" Grid.Row="0"  Grid.Column="1" FontFamily="Roboto" FontSize="Medium" TextColor="#424242" VerticalTextAlignment="Center" />
+                                    <Label Text="{Binding SubjectName}" Grid.Row="0" Grid.Column="0" FontFamily="Roboto" FontSize="Medium" TextColor="Black" VerticalTextAlignment="Center" />
+                                    <Label Text="{Binding Average}" Grid.Row="0" Grid.Column="1" FontFamily="Roboto" FontSize="Medium" TextColor="#424242" VerticalTextAlignment="Center" />
 
                                 </Grid>
                             </ViewCell>
+                            
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
