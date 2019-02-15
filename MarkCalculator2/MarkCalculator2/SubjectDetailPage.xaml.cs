@@ -15,6 +15,24 @@ namespace MarkCalculator2
 		public SubjectDetailPage ()
 		{
 			InitializeComponent ();
-		}
-	}
+
+            navigationCenter.Text = "předmět";
+
+        }
+
+        private void backClicked(object sender, EventArgs e)
+        {
+
+        }
+
+        private void addMarkClicked(object sender, EventArgs e)
+        {
+
+        }
+
+        private void deleteMarkClicked(object sender, EventArgs e)
+        {
+
+        }
+    }
 }
