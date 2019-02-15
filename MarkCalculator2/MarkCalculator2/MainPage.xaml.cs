@@ -63,5 +63,6 @@ namespace MarkCalculator2
             label1.TextDecorations = TextDecorations.Underline;
             await Navigation.PushModalAsync(new SubjectDetailPage());
         }
+
     }
 }
