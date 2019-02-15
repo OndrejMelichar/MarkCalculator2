@@ -50,8 +50,17 @@ namespace MarkCalculator2
             return collection;
         }
 
-        private async void subjectTapped(object sender, ItemTappedEventArgs e)
+        /*private async void subjectTapped(object sender, ItemTappedEventArgs e)
         {
+            await Navigation.PushModalAsync(new SubjectDetailPage());
+        }*/
+
+        private async void subjectTapped(object sender, EventArgs e)
+        {
+            Grid grid = ((ViewCell)sender).FindByName<Grid>("ViewCellGrid");
+            Label label1 = grid.FindByName<Label>("ViewCellLabel");
+            grid.BackgroundColor = Color.White;
+            label1.TextDecorations = TextDecorations.Underline;
             await Navigation.PushModalAsync(new SubjectDetailPage());
         }
     }

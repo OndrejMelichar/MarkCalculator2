@@ -32,12 +32,13 @@
                 <Button Grid.Row="0" Grid.Column="2" x:Name="navigationRight" Image="Resources/drawable/plus_icon_56.png" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" BorderColor="Transparent" />
             </Grid>
 
-            <ListView x:Name="subjectsListView" Grid.Row="1" Grid.Column="0" ItemTapped="subjectTapped">
+            <ListView x:Name="subjectsListView" Grid.Row="1" Grid.Column="0">
+                <!--ItemTapped="subjectTapped"-->
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
+                        <ViewCell Tapped="subjectTapped">
 
-                            <Grid HeightRequest="48">
+                            <Grid HeightRequest="48" x:Name="ViewCellGrid">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
@@ -46,7 +47,7 @@
                                     <ColumnDefinition Width="48" />
                                 </Grid.ColumnDefinitions>
 
-                                <Label Text="{Binding SubjectName}" Grid.Row="0" Grid.Column="0" FontFamily="Roboto" FontSize="Medium" TextColor="Black" VerticalTextAlignment="Center" />
+                                <Label Text="{Binding SubjectName}" x:Name="ViewCellLabel" Grid.Row="0" Grid.Column="0" FontFamily="Roboto" FontSize="Medium" TextColor="Black" VerticalTextAlignment="Center" />
                                 <Label Text="{Binding Average}" Grid.Row="0" Grid.Column="1" FontFamily="Roboto" FontSize="Medium" TextColor="#424242" VerticalTextAlignment="Center" />
 
                             </Grid>
