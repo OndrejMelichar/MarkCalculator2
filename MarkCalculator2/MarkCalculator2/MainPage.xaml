@@ -7,36 +7,54 @@
 
     <ContentPage.Content>
         <Grid>
-            <StackLayout VerticalOptions="Start" HorizontalOptions="FillAndExpand" Orientation="Horizontal" BackgroundColor="#ffeb3b" Padding="16,16,16,16" >
-                <Label HorizontalOptions="StartAndExpand" />
-                <Label HorizontalOptions="CenterAndExpand" Text="Title" FontFamily="Roboto" FontSize="Medium" TextColor="Black" />
-                <Label HorizontalOptions="EndAndExpand" />
-            </StackLayout>
-            <StackLayout>
-                <ListView x:Name="subjectsListView" ItemTapped="subjectTapped">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                                   
-                            <ViewCell>
-                                <Grid HeightRequest="48">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="48" />
-                                    </Grid.ColumnDefinitions>
 
-                                    <Label Text="{Binding SubjectName}" Grid.Row="0" Grid.Column="0" FontFamily="Roboto" FontSize="Medium" TextColor="Black" VerticalTextAlignment="Center" />
-                                    <Label Text="{Binding Average}" Grid.Row="0" Grid.Column="1" FontFamily="Roboto" FontSize="Medium" TextColor="#424242" VerticalTextAlignment="Center" />
+            <Grid.RowDefinitions>
+                <RowDefinition Height="56" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-                                </Grid>
-                            </ViewCell>
-                            
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </StackLayout>
+            <Grid Grid.Row="0" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="#ffeb3b">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="56" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="56" />
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Row="0" Grid.Column="0" x:Name="navigationLeft" Image="Resources/drawable/x1.png" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" BorderColor="Transparent" />
+                <Label Grid.Row="0" Grid.Column="1" x:Name="navigationCenter" VerticalOptions="FillAndExpand" HorizontalOptions="CenterAndExpand" Text="Základy společenských věd" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontFamily="sans-serif-medium" FontSize="22" TextColor="Black" />
+                <Button Grid.Row="0" Grid.Column="2" x:Name="navigationRight" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Text="+" BackgroundColor="Transparent" BorderColor="Transparent" FontFamily="sans-serif-light" FontSize="28" TextColor="Black" />
+            </Grid>
+
+            <ListView x:Name="subjectsListView" Grid.Row="1" Grid.Column="0" ItemTapped="subjectTapped">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+
+                            <Grid HeightRequest="48">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="48" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label Text="{Binding SubjectName}" Grid.Row="0" Grid.Column="0" FontFamily="Roboto" FontSize="Medium" TextColor="Black" VerticalTextAlignment="Center" />
+                                <Label Text="{Binding Average}" Grid.Row="0" Grid.Column="1" FontFamily="Roboto" FontSize="Medium" TextColor="#424242" VerticalTextAlignment="Center" />
+
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            
         </Grid>
     </ContentPage.Content>
 
