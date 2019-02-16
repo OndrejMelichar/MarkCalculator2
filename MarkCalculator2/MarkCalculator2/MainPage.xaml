@@ -36,6 +36,8 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell Tapped="subjectTapped">
+                            
+                            
 
                             <Grid HeightRequest="48" x:Name="ViewCellGrid">
                                 <Grid.RowDefinitions>

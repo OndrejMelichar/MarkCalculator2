@@ -57,9 +57,9 @@ namespace MarkCalculator2
             }
         }
 
-        private void backClicked(object sender, EventArgs e)
+        private async void backClicked(object sender, EventArgs e)
         {
-
+            await this.Navigation.PopModalAsync();
         }
     }
 }

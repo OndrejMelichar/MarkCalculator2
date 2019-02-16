@@ -24,9 +24,9 @@ namespace MarkCalculator2
             navigationGrid.BackgroundColor = ThemeCollors.StringToColor(ThemeCollors.NavigationColor);
         }
 
-        private void backClicked(object sender, EventArgs e)
+        private async void backClicked(object sender, EventArgs e)
         {
-
+            await this.Navigation.PopModalAsync();
         }
 
         private void addMarkClicked(object sender, EventArgs e)
