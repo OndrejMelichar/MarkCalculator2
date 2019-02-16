@@ -20,20 +20,25 @@ namespace Provider
             SQLWriteFactory writeFactory = new SQLWriteFactory();
             SQLWrite SQLWrite = await writeFactory.GetInstance(DataHelper.DatabaseName);
             await SQLWrite.AddSubject(subject);
-            this.subjects.Add(subject);
-            this.MarksBySubjects.Add(subject, new List<Mark>());
+            Subject formedSubject = new Subject() { Name = subject.Name, SubjectId = await this.getSubjectId(subject) };
+            this.subjects.Add(formedSubject);
+            this.MarksBySubjects.Add(formedSubject, new List<Mark>());
             StudentBook.SubjectsObservable.Add(new SubjectListViewItem() { SubjectName = subject.Name, Average = 0f } );
         }
 
         public async Task AddMark(Mark mark, Subject subject)
         {
-            SQLReadFactory readFactory = new SQLReadFactory();
-            SQLRead SQLRead = await readFactory.GetInstance(DataHelper.DatabaseName);
-            int subjectId = await SQLRead.GetSubjectId(subject);
-            mark.SubjectId = subjectId;
+            if (subject.SubjectId != null && subject.SubjectId != 0)
+            {
+                var x = true;
+            }
+
+            mark.SubjectId = subject.SubjectId;
             SQLWriteFactory writeFactory = new SQLWriteFactory();
             SQLWrite SQLWrite = await writeFactory.GetInstance(DataHelper.DatabaseName);
             await SQLWrite.AddMark(mark);
+            this.marks.Add(mark);
+            StudentBook.SubjectMarksObservable.Add(new MarkListViewItem() { MarkValue = mark.Value, MarkWeight = mark.Weight });
         }
 
         public async Task<List<Subject>> GetSubjects()
@@ -56,14 +61,14 @@ namespace Provider
             return this.MarksBySubjects;
         }
 
-        public async Task<List<Mark>> GetSubjectMarks(Subject subject)
+        public async Task<List<Mark>> GetSubjectMarks(Subject subjectPattern)
         {
             List<Mark> subjectMarks = new List<Mark>();
             List<Mark> allMarks = await this.getMarks();
 
             foreach (Mark mark in allMarks)
             {
-                if (mark.SubjectId == subject.SubjectId)
+                if (mark.SubjectId == subjectPattern.SubjectId)
                 {
                     subjectMarks.Add(mark);
                 }
@@ -109,6 +114,14 @@ namespace Provider
             }
 
             return dictionary;
+        }
+
+        private async Task<int> getSubjectId(Subject subject)
+        {
+            SQLReadFactory readFactory = new SQLReadFactory();
+            SQLRead SQLRead = await readFactory.GetInstance(DataHelper.DatabaseName);
+            int subjectId = await SQLRead.GetSubjectId(subject);
+            return subjectId;
         }
 
     }

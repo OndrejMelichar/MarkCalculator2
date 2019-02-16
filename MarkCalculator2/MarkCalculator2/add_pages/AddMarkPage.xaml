@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MarkCalculator2.AddSubjectPage">
+             x:Class="MarkCalculator2.AddMarkPage">
     <ContentPage.Content>
         <Grid>
 
@@ -25,12 +25,13 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Grid.Row="0" Grid.Column="0" x:Name="navigationLeft" Image="Resources/drawable/arrow_back_icon_56.png" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" BorderColor="Transparent" Clicked="backClicked"/>
-                <Label Grid.Row="0" Grid.Column="1" Text="Přidat předmět" VerticalOptions="FillAndExpand" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontFamily="sans-serif-medium" FontSize="22" TextColor="Black" />
+                <Label Grid.Row="0" Grid.Column="1" Text="Přidat známku" VerticalOptions="FillAndExpand" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontFamily="sans-serif-medium" FontSize="22" TextColor="Black" />
             </Grid>
 
             <StackLayout Grid.Row="1" Grid.Column="0">
-                <Entry x:Name="newSubjectNameEntry" Placeholder="Název nového předmětu" Margin="0,16,0,0" />
-                <Button x:Name="addSubjectButton" Text="Uložit předmět" Clicked="addSubjectButtonClicked" Margin="0,16,0,0" />
+                <Entry x:Name="newMarkValueEntry" Placeholder="Nová známka" />
+                <Entry x:Name="newMarkWeightEntry" Placeholder="Celočíselná váha nové známky" />
+                <Button x:Name="newMarkButton" Text="Uložit známku" Clicked="newMarkButtonClicked" />
             </StackLayout>
 
         </Grid>

@@ -27,7 +27,7 @@ namespace MarkCalculator2
                 await this.studentBook.AddSubject(new Subject() { Name = "Základy společenských věd" });
                 await this.displaySubjects();
                 await this.studentBook.AddSubject(new Subject() { Name = "Tělesná výchova" });
-            }).Wait();
+            }).Wait(); //.ConfigureAwait(true);
         }
 
         private void setTheme()
@@ -67,7 +67,8 @@ namespace MarkCalculator2
             Label label1 = grid.FindByName<Label>("ViewCellLabel");
             grid.BackgroundColor = Color.White;
             label1.TextDecorations = TextDecorations.Underline;
-            await Navigation.PushModalAsync(new SubjectDetailPage());
+            Subject subject = new Subject() { Name = label1.Text };
+            await Navigation.PushModalAsync(new SubjectDetailPage(subject, this.studentBook));
         }
 
         private async void addSubjectClicked(object sender, EventArgs e)

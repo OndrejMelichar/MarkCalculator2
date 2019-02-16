@@ -41,7 +41,7 @@ namespace SQLClassLibrary
         {
             var query = databaseConnection.Table<Subject>().Where(v => v.Name.Equals(subject.Name));
             var data = await query.ToListAsync();
-            return data[0].SubjectId;
+            return data[data.Count - 1].SubjectId;
         }
 
     }
