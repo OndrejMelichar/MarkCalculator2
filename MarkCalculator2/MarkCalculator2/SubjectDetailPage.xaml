@@ -13,7 +13,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Row="0" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="#2196f3">
+            <Grid x:Name="navigationGrid" Grid.Row="0" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />

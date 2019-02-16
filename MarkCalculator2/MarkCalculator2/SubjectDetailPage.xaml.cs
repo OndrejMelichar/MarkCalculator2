@@ -15,9 +15,13 @@ namespace MarkCalculator2
 		public SubjectDetailPage ()
 		{
 			InitializeComponent ();
-
             navigationCenter.Text = "předmět";
+            this.setTheme();
+        }
 
+        private void setTheme()
+        {
+            navigationGrid.BackgroundColor = ThemeCollors.StringToColor(ThemeCollors.NavigationColor);
         }
 
         private void backClicked(object sender, EventArgs e)

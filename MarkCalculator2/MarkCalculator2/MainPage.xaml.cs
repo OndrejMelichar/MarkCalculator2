@@ -19,6 +19,7 @@ namespace MarkCalculator2
             InitializeComponent();
 
             this.studentBook = new StudentBook();
+            this.setTheme();
 
             Task.Run(async () => {
                 await this.studentBook.AddSubject(new Subject() { Name = "Matematika" });
@@ -27,6 +28,11 @@ namespace MarkCalculator2
                 await this.displaySubjects();
                 await this.studentBook.AddSubject(new Subject() { Name = "Tělesná výchova" });
             }).Wait();
+        }
+
+        private void setTheme()
+        {
+            navigationGrid.BackgroundColor = ThemeCollors.StringToColor(ThemeCollors.NavigationColor);
         }
 
         private async Task displaySubjects()
@@ -64,5 +70,9 @@ namespace MarkCalculator2
             await Navigation.PushModalAsync(new SubjectDetailPage());
         }
 
+        private async void addSubjectClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushModalAsync(new AddSubjectPage(this.studentBook));
+        }
     }
 }

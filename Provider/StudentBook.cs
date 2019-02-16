@@ -100,6 +100,21 @@ namespace Provider
 
             return 0f;
         }
+
+        public async Task<bool> SubjectNameExists(string name)
+        {
+            List<Subject> subjects = await this.GetSubjects();
+
+            foreach (Subject subject in subjects)
+            {
+                if (subject.Name == name)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 
 

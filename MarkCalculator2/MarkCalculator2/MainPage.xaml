@@ -16,7 +16,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Row="0" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="#2196f3">
+            <Grid x:Name="navigationGrid" Grid.Row="0" Grid.Column="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -28,7 +28,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Grid.Row="0" Grid.Column="1" x:Name="navigationCenter" VerticalOptions="FillAndExpand" HorizontalOptions="CenterAndExpand" Text="Aplikejšn" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontFamily="sans-serif-medium" FontSize="22" TextColor="Black" />
-                <Button Grid.Row="0" Grid.Column="2" x:Name="navigationRight" Image="Resources/drawable/plus_icon_56.png" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" BorderColor="Transparent" />
+                <Button Grid.Row="0" Grid.Column="2" x:Name="navigationRight" Clicked="addSubjectClicked" Image="Resources/drawable/plus_icon_56.png" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" BorderColor="Transparent" />
             </Grid>
 
             <ListView x:Name="subjectsListView" Grid.Row="1" Grid.Column="0">
