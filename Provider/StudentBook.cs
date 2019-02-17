@@ -31,26 +31,23 @@ namespace Provider
 
         public async Task AddMark(Mark mark, Subject subject)
         {
-            await this.dataHelper.AddMark(mark, subject);
+            List<Mark> marks = await this.GetSubjectMarks(subject);
+            marks.Add(mark);
+            float average = this.GetMarksAverage(marks);
+            await this.dataHelper.AddMark(mark, subject, average);
         }
 
         public async Task<List<Mark>> GetSubjectMarks(Subject subject)
         {
-            Dictionary<Subject, List<Mark>> marksBySubjects = await this.dataHelper.GetMarksBySubjects();
+            /*Dictionary<Subject, List<Mark>> marksBySubjects = await this.dataHelper.GetMarksBySubjects();
             List<Subject> keys = new List<Subject>(marksBySubjects.Keys);
             List<List<Mark>> marks = new List<List<Mark>>(marksBySubjects.Values);
             int index = keys.IndexOf(subject);
-            if (index == -1)
-            {
-                var x = true; // proto pád
-            } else if (index == 0)
-            {
-                var x = true;
-            } else
-            {
-                var x = true;
-            }
-            return marks[index];
+            return marks[index];*/
+            Dictionary<Subject, List<Mark>> marksBySubjects = await this.dataHelper.GetMarksBySubjects();
+            List<List<Mark>> marks = new List<List<Mark>>(marksBySubjects.Values);
+            int index = this.dataHelper.GetSubjectListId(subject);
+            return marks[index]; // klič nenalezen
         }
 
         public async Task<Status> GetSubjectStatus(Subject subject)

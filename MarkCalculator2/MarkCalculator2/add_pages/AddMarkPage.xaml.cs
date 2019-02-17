@@ -22,12 +22,7 @@ namespace MarkCalculator2
             InitializeComponent();
             this.subject = subject;
             this.studentBook = studentBook;
-            this.setTheme();
-        }
-
-        private void setTheme()
-        {
-            //navigationGrid.BackgroundColor = ThemeCollors.StringToColor(ThemeCollors.NavigationColor);
+            navigationGrid.BackgroundColor = ThemeCollors.StringToColor(ThemeCollors.NavigationColor);
         }
 
         private bool newMarkValueCheck(float mark)

@@ -27,7 +27,7 @@ namespace Provider
             StudentBook.SubjectsObservable.Add(new SubjectListViewItem() { SubjectName = subject.Name, SubjectId = subject.SubjectId, Average = 0f } );
         }
 
-        public async Task AddMark(Mark mark, Subject subject)
+        public async Task AddMark(Mark mark, Subject subject, float average)
         {
             mark.SubjectId = subject.SubjectId;
             SQLWriteFactory writeFactory = new SQLWriteFactory();
@@ -35,6 +35,8 @@ namespace Provider
             await SQLWrite.AddMark(mark);
             this.marks.Add(mark);
             StudentBook.SubjectMarksObservable.Add(new MarkListViewItem() { MarkValue = mark.Value, MarkWeight = mark.Weight });
+            int subjectListId = this.GetSubjectListId(subject);
+            StudentBook.SubjectsObservable[subjectListId] = new SubjectListViewItem() { SubjectName = subject.Name, SubjectId = subject.SubjectId, Average = average };
         }
 
         public async Task<List<Subject>> GetSubjects()
@@ -118,6 +120,21 @@ namespace Provider
             SQLRead SQLRead = await readFactory.GetInstance(DataHelper.DatabaseName);
             int subjectId = await SQLRead.GetSubjectId(subject);
             return subjectId;
+        }
+
+        public int GetSubjectListId(Subject searchedSubject)
+        {
+            for (int i = 0; i < this.subjects.Count; i++)
+            {
+                Subject subject = this.subjects[i];
+
+                if (subject.Name == searchedSubject.Name && subject.SubjectId == searchedSubject.SubjectId)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
         }
 
     }
