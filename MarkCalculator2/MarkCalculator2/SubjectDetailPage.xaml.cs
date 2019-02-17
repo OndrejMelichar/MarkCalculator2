@@ -20,12 +20,30 @@ namespace MarkCalculator2
 
 		public SubjectDetailPage(Subject subject, StudentBook studentBook)
 		{
-			InitializeComponent ();
+            /*InitializeComponent ();
             this.subject = subject;
             this.studentBook = studentBook;
             marksListView.ItemsSource = StudentBook.SubjectMarksObservable;
             navigationCenter.Text = this.subject.Name;
+            navigationGrid.BackgroundColor = ThemeCollors.StringToColor(ThemeCollors.NavigationColor);*/
+
+            InitializeComponent();
+            this.subject = subject;
+            this.studentBook = studentBook;
+
+            Task.Run(async () => {
+                await this.displayMarks();
+            }).ConfigureAwait(true);
+
+            navigationCenter.Text = this.subject.Name;
             navigationGrid.BackgroundColor = ThemeCollors.StringToColor(ThemeCollors.NavigationColor);
+        }
+
+        private async Task displayMarks()
+        {
+            List<Mark> marks = await this.studentBook.GetSubjectMarks(this.subject); //toto asi ne
+            StudentBook.SubjectMarksObservable = this.marksToListViewCollection(marks);
+            marksListView.ItemsSource = StudentBook.SubjectMarksObservable;
         }
 
         private ObservableCollection<MarkListViewItem> marksToListViewCollection(List<Mark> marks)
