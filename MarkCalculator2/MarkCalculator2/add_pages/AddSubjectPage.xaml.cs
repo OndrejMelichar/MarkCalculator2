@@ -20,17 +20,7 @@ namespace MarkCalculator2
 		{
 			InitializeComponent();
             this.studentBook = studentBook;
-            this.setTheme();
-        }
-
-        private void setTheme()
-        {
             navigationGrid.BackgroundColor = ThemeCollors.StringToColor(ThemeCollors.NavigationColor);
-        }
-
-        private string normalizeName(string name)
-        {
-            return name.First().ToString().ToUpper() + name.Substring(1).ToLower();
         }
 
         private async Task<bool> newSubjectNameCheck(string name)
@@ -47,7 +37,7 @@ namespace MarkCalculator2
 
         private async void addSubjectButtonClicked(object sender, EventArgs e)
         {
-            string newSubjectName = this.normalizeName(newSubjectNameEntry.Text);
+            string newSubjectName = this.studentBook.NormalizeSubjectName(newSubjectNameEntry.Text);
             bool checkResult = await this.newSubjectNameCheck(newSubjectName);
 
             if (checkResult)

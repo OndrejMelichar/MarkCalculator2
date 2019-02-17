@@ -23,25 +23,9 @@ namespace MarkCalculator2
 			InitializeComponent ();
             this.subject = subject;
             this.studentBook = studentBook;
-            this.setTheme();
-
-            Task.Run(async () => {
-                await this.displayMarks();
-            }).ConfigureAwait(true);
-        }
-
-        private void setTheme()
-        {
+            marksListView.ItemsSource = StudentBook.SubjectMarksObservable;
             navigationCenter.Text = this.subject.Name;
             navigationGrid.BackgroundColor = ThemeCollors.StringToColor(ThemeCollors.NavigationColor);
-        }
-
-        private async Task displayMarks()
-        {
-            List<Mark> marks = await this.studentBook.GetSubjectMarks(this.subject); //toto asi ne
-            StudentBook.SubjectMarksObservable = this.marksToListViewCollection(marks);
-            System.Diagnostics.Debug.WriteLine(StudentBook.SubjectMarksObservable);
-            marksListView.ItemsSource = StudentBook.SubjectMarksObservable;
         }
 
         private ObservableCollection<MarkListViewItem> marksToListViewCollection(List<Mark> marks)
@@ -64,7 +48,6 @@ namespace MarkCalculator2
         private async void addMarkClicked(object sender, EventArgs e)
         {
             await Navigation.PushModalAsync(new AddMarkPage(this.subject, this.studentBook));
-            await this.displayMarks(); //? asi zde neí potřeba - je to jen pokus
         }
 
         private void deleteMarkClicked(object sender, EventArgs e)

@@ -20,19 +20,15 @@ namespace Provider
             SQLWriteFactory writeFactory = new SQLWriteFactory();
             SQLWrite SQLWrite = await writeFactory.GetInstance(DataHelper.DatabaseName);
             await SQLWrite.AddSubject(subject);
-            Subject formedSubject = new Subject() { Name = subject.Name, SubjectId = await this.getSubjectId(subject) };
+            int subjectId = await this.GetSubjectId(subject);
+            Subject formedSubject = new Subject() { Name = subject.Name, SubjectId = subjectId };
             this.subjects.Add(formedSubject);
             this.MarksBySubjects.Add(formedSubject, new List<Mark>());
-            StudentBook.SubjectsObservable.Add(new SubjectListViewItem() { SubjectName = subject.Name, Average = 0f } );
+            StudentBook.SubjectsObservable.Add(new SubjectListViewItem() { SubjectName = subject.Name, SubjectId = subject.SubjectId, Average = 0f } );
         }
 
         public async Task AddMark(Mark mark, Subject subject)
         {
-            if (subject.SubjectId != null && subject.SubjectId != 0)
-            {
-                var x = true;
-            }
-
             mark.SubjectId = subject.SubjectId;
             SQLWriteFactory writeFactory = new SQLWriteFactory();
             SQLWrite SQLWrite = await writeFactory.GetInstance(DataHelper.DatabaseName);
@@ -116,7 +112,7 @@ namespace Provider
             return dictionary;
         }
 
-        private async Task<int> getSubjectId(Subject subject)
+        public async Task<int> GetSubjectId(Subject subject)
         {
             SQLReadFactory readFactory = new SQLReadFactory();
             SQLRead SQLRead = await readFactory.GetInstance(DataHelper.DatabaseName);

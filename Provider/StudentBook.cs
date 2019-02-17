@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -39,6 +40,16 @@ namespace Provider
             List<Subject> keys = new List<Subject>(marksBySubjects.Keys);
             List<List<Mark>> marks = new List<List<Mark>>(marksBySubjects.Values);
             int index = keys.IndexOf(subject);
+            if (index == -1)
+            {
+                var x = true; // proto pád
+            } else if (index == 0)
+            {
+                var x = true;
+            } else
+            {
+                var x = true;
+            }
             return marks[index];
         }
 
@@ -114,6 +125,16 @@ namespace Provider
             }
 
             return false;
+        }
+
+        public async Task<int> GetSubjectId(Subject subject)
+        {
+            return await this.dataHelper.GetSubjectId(subject);
+        }
+
+        public string NormalizeSubjectName(string name)
+        {
+            return name.First().ToString().ToUpper() + name.Substring(1).ToLower();
         }
     }
 

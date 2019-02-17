@@ -19,55 +19,17 @@ namespace MarkCalculator2
             InitializeComponent();
 
             this.studentBook = new StudentBook();
-            this.setTheme();
-
-            Task.Run(async () => {
-                await this.studentBook.AddSubject(new Subject() { Name = "Matematika" });
-                await this.studentBook.AddSubject(new Subject() { Name = "Český jazyk" });
-                await this.studentBook.AddSubject(new Subject() { Name = "Základy společenských věd" });
-                await this.displaySubjects();
-                await this.studentBook.AddSubject(new Subject() { Name = "Tělesná výchova" });
-            }).Wait(); //.ConfigureAwait(true);
-        }
-
-        private void setTheme()
-        {
             navigationGrid.BackgroundColor = ThemeCollors.StringToColor(ThemeCollors.NavigationColor);
-        }
-
-        private async Task displaySubjects()
-        {
-            List<Subject> subjects = await this.studentBook.GetSubjects();
-            StudentBook.SubjectsObservable = await this.subjectsToListViewCollection(subjects);
             subjectsListView.ItemsSource = StudentBook.SubjectsObservable;
         }
 
-        private async Task<ObservableCollection<SubjectListViewItem>> subjectsToListViewCollection(List<Subject> subjects)
-        {
-            ObservableCollection<SubjectListViewItem> collection = new ObservableCollection<SubjectListViewItem>();
-
-            foreach (Subject subject in subjects)
-            {
-                List<Mark> subjectMarks = await this.studentBook.GetSubjectMarks(subject);
-                float subjectAverage = this.studentBook.GetMarksAverage(subjectMarks);
-                collection.Add(new SubjectListViewItem() { SubjectName = subject.Name, Average = subjectAverage } );
-            }
-
-            return collection;
-        }
-
-        /*private async void subjectTapped(object sender, ItemTappedEventArgs e)
-        {
-            await Navigation.PushModalAsync(new SubjectDetailPage());
-        }*/
-
         private async void subjectTapped(object sender, EventArgs e)
         {
-            Grid grid = ((ViewCell)sender).FindByName<Grid>("ViewCellGrid");
-            Label label1 = grid.FindByName<Label>("ViewCellLabel");
+            ViewCell viewCell = ((ViewCell)sender);
+            Grid grid = viewCell.FindByName<Grid>("ViewCellGrid");
+            SubjectListViewItem subjectListViewItem = (SubjectListViewItem)viewCell.BindingContext;
             grid.BackgroundColor = Color.White;
-            label1.TextDecorations = TextDecorations.Underline;
-            Subject subject = new Subject() { Name = label1.Text };
+            Subject subject = new Subject() { Name = subjectListViewItem.SubjectName, SubjectId = subjectListViewItem.SubjectId };
             await Navigation.PushModalAsync(new SubjectDetailPage(subject, this.studentBook));
         }
 
