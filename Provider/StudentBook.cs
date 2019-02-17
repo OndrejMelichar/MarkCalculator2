@@ -39,15 +39,10 @@ namespace Provider
 
         public async Task<List<Mark>> GetSubjectMarks(Subject subject)
         {
-            /*Dictionary<Subject, List<Mark>> marksBySubjects = await this.dataHelper.GetMarksBySubjects();
-            List<Subject> keys = new List<Subject>(marksBySubjects.Keys);
-            List<List<Mark>> marks = new List<List<Mark>>(marksBySubjects.Values);
-            int index = keys.IndexOf(subject);
-            return marks[index];*/
             Dictionary<Subject, List<Mark>> marksBySubjects = await this.dataHelper.GetMarksBySubjects();
             List<List<Mark>> marks = new List<List<Mark>>(marksBySubjects.Values);
             int index = this.dataHelper.GetSubjectListId(subject);
-            return marks[index]; // klič nenalezen
+            return marks[index];
         }
 
         public async Task<Status> GetSubjectStatus(Subject subject)
