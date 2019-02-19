@@ -27,7 +27,7 @@
                     <ColumnDefinition Width="56" />
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="1" x:Name="navigationCenter" VerticalOptions="FillAndExpand" HorizontalOptions="CenterAndExpand" Text="Aplikejšn" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontFamily="sans-serif-medium" FontSize="22" TextColor="Black" />
+                <Label Grid.Row="0" Grid.Column="1" x:Name="navigationCenter" VerticalOptions="FillAndExpand" HorizontalOptions="CenterAndExpand" Text="Aplikejšn" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontFamily="sans-serif-medium" FontSize="22" TextColor="White" />
                 <Button Grid.Row="0" Grid.Column="2" x:Name="navigationRight" Clicked="addSubjectClicked" Image="Resources/drawable/plus_icon_56.png" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" BorderColor="Transparent" />
             </Grid>
 

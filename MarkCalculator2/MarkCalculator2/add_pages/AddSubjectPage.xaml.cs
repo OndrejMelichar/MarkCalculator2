@@ -20,7 +20,7 @@ namespace MarkCalculator2
 		{
 			InitializeComponent();
             this.studentBook = studentBook;
-            navigationGrid.BackgroundColor = ThemeCollors.StringToColor(ThemeCollors.NavigationColor);
+            navigationGrid.BackgroundColor = ThemeCollors.StringToColor(ThemeCollors.DefaultNavigationColor);
         }
 
         private async Task<bool> newSubjectNameCheck(string name)

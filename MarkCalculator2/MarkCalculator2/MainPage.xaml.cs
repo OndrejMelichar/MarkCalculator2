@@ -19,8 +19,46 @@ namespace MarkCalculator2
             InitializeComponent();
 
             this.studentBook = new StudentBook();
-            navigationGrid.BackgroundColor = ThemeCollors.StringToColor(ThemeCollors.NavigationColor);
+
+            Task.Run(async () => {
+                await this.displaySubjects();
+            }).ConfigureAwait(true);
+
+            navigationGrid.BackgroundColor = ThemeCollors.StringToColor(ThemeCollors.DefaultNavigationColor);
             subjectsListView.ItemsSource = StudentBook.SubjectsObservable;
+        }
+
+        private async Task displaySubjects()
+        {
+            //await this.deleteAll();
+
+            List<Subject> subjects = await this.studentBook.GetSubjects();
+            StudentBook.SubjectsObservable = await this.subjectsToListViewCollection(subjects);
+            //
+        }
+
+        private async Task deleteAll()
+        {
+            List<Subject> subjectsx = await this.studentBook.GetSubjects();
+
+            foreach (Subject subjectx in subjectsx)
+            {
+                await this.studentBook.DeleteSubject(subjectx);
+            }
+        }
+
+        private async Task<ObservableCollection<SubjectListViewItem>> subjectsToListViewCollection(List<Subject> subjects)
+        {
+            ObservableCollection<SubjectListViewItem> collection = new ObservableCollection<SubjectListViewItem>();
+
+            foreach (Subject subject in subjects)
+            {
+                List<Mark> marks = await this.studentBook.GetSubjectMarks(subject);
+                float average = this.studentBook.GetMarksAverage(marks);
+                collection.Add(new SubjectListViewItem() { SubjectId = subject.SubjectId, SubjectName = subject.Name, Average = average });
+            }
+
+            return collection;
         }
 
         private async void subjectTapped(object sender, EventArgs e)
@@ -28,7 +66,7 @@ namespace MarkCalculator2
             ViewCell viewCell = ((ViewCell)sender);
             Grid grid = viewCell.FindByName<Grid>("ViewCellGrid");
             SubjectListViewItem subjectListViewItem = (SubjectListViewItem)viewCell.BindingContext;
-            grid.BackgroundColor = Color.White;
+            grid.BackgroundColor = ThemeCollors.StringToColor(ThemeCollors.BackgroundClassic);
             Subject subject = new Subject() { Name = subjectListViewItem.SubjectName, SubjectId = subjectListViewItem.SubjectId };
             await Navigation.PushModalAsync(new SubjectDetailPage(subject, this.studentBook));
         }

@@ -21,9 +21,9 @@ namespace Provider
             SQLWrite SQLWrite = await writeFactory.GetInstance(DataHelper.DatabaseName);
             await SQLWrite.AddSubject(subject);
             int subjectId = await this.GetSubjectId(subject);
-            Subject formedSubject = new Subject() { Name = subject.Name, SubjectId = subjectId };
-            this.subjects.Add(formedSubject);
-            this.MarksBySubjects.Add(formedSubject, new List<Mark>());
+            subject.SubjectId = subjectId;
+            this.subjects.Add(subject);
+            this.MarksBySubjects.Add(subject, new List<Mark>());
             StudentBook.SubjectsObservable.Add(new SubjectListViewItem() { SubjectName = subject.Name, SubjectId = subject.SubjectId, Average = 0f } );
         }
 
@@ -33,10 +33,40 @@ namespace Provider
             SQLWriteFactory writeFactory = new SQLWriteFactory();
             SQLWrite SQLWrite = await writeFactory.GetInstance(DataHelper.DatabaseName);
             await SQLWrite.AddMark(mark);
+            int markId = await this.GetMarkId(mark, subject);
+            mark.MarkId = markId;
             this.marks.Add(mark);
-            StudentBook.SubjectMarksObservable.Add(new MarkListViewItem() { MarkValue = mark.Value, MarkWeight = mark.Weight });
+            StudentBook.SubjectMarksObservable.Add(new MarkListViewItem() { MarkValue = mark.Value, MarkWeight = mark.Weight, MarkId = mark.MarkId });
             int subjectListId = this.GetSubjectListId(subject);
             StudentBook.SubjectsObservable[subjectListId] = new SubjectListViewItem() { SubjectName = subject.Name, SubjectId = subject.SubjectId, Average = average };
+        }
+
+        public async Task DeleteSubject(Subject subject, float average)
+        {
+            List<Mark> subjectMarks = await this.GetSubjectMarks(subject);
+
+            foreach (Mark mark in subjectMarks)
+            {
+                await this.DeleteMark(mark);
+            }
+
+            SQLWriteFactory writeFactory = new SQLWriteFactory();
+            SQLWrite SQLWrite = await writeFactory.GetInstance(DataHelper.DatabaseName);
+            await SQLWrite.DeleteSubject(subject);
+            this.subjects.Remove(subject);
+            this.MarksBySubjects.Remove(subject);
+            StudentBook.SubjectsObservable.Remove(new SubjectListViewItem() { SubjectName = subject.Name, SubjectId = subject.SubjectId, Average =  average});
+        }
+
+        public async Task DeleteMark(Mark mark)
+        {
+            SQLWriteFactory writeFactory = new SQLWriteFactory();
+            SQLWrite SQLWrite = await writeFactory.GetInstance(DataHelper.DatabaseName);
+            await SQLWrite.DeleteMark(mark);
+            this.marks.Remove(mark);
+            Subject subject = this.getSubjectById(mark.SubjectId);
+            this.MarksBySubjects[subject].Remove(mark);
+            StudentBook.SubjectMarksObservable.Remove(new MarkListViewItem() { MarkId = mark.MarkId, MarkValue = mark.Value, MarkWeight = mark.Weight });
         }
 
         public async Task<List<Subject>> GetSubjects()
@@ -114,6 +144,19 @@ namespace Provider
             return dictionary;
         }
 
+        private Subject getSubjectById(int subjectId)
+        {
+            foreach (Subject subject in this.subjects)
+            {
+                if (subject.SubjectId == subjectId)
+                {
+                    return subject;
+                }
+            }
+
+            return null;
+        }
+
         public async Task<int> GetSubjectId(Subject subject)
         {
             SQLReadFactory readFactory = new SQLReadFactory();
@@ -122,13 +165,21 @@ namespace Provider
             return subjectId;
         }
 
+        public async Task<int> GetMarkId(Mark mark, Subject subject)
+        {
+            SQLReadFactory readFactory = new SQLReadFactory();
+            SQLRead SQLRead = await readFactory.GetInstance(DataHelper.DatabaseName);
+            int markId = await SQLRead.GetMarkId(mark, subject);
+            return markId;
+        }
+
         public int GetSubjectListId(Subject searchedSubject)
         {
             for (int i = 0; i < this.subjects.Count; i++)
             {
                 Subject subject = this.subjects[i];
 
-                if (subject.Name == searchedSubject.Name && subject.SubjectId == searchedSubject.SubjectId)
+                if (subject.SubjectId == searchedSubject.SubjectId && subject.Name == searchedSubject.Name)
                 {
                     return i;
                 }

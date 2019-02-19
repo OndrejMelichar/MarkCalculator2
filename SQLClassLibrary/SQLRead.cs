@@ -43,6 +43,13 @@ namespace SQLClassLibrary
             var data = await query.ToListAsync();
             return data[data.Count - 1].SubjectId;
         }
+        
+        public async Task<int> GetMarkId(Mark mark, Subject subject)
+        {
+            var query = databaseConnection.Table<Mark>().Where(v => v.SubjectId.Equals(subject.SubjectId) && v.Value.Equals(mark.Value) && v.Weight.Equals(mark.Weight));
+            var data = await query.ToListAsync();
+            return data[data.Count - 1].SubjectId;
+        }
 
     }
 }

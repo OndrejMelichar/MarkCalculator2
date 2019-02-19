@@ -37,6 +37,18 @@ namespace Provider
             await this.dataHelper.AddMark(mark, subject, average);
         }
 
+        public async Task DeleteSubject(Subject subject)
+        {
+            List<Mark> subjectMarks = await this.GetSubjectMarks(subject);
+            float average = this.GetMarksAverage(subjectMarks);
+            await this.dataHelper.DeleteSubject(subject, average);
+        }
+
+        public async Task DeleteMark(Mark mark)
+        {
+            await this.dataHelper.DeleteMark(mark);
+        }
+
         public async Task<List<Mark>> GetSubjectMarks(Subject subject)
         {
             Dictionary<Subject, List<Mark>> marksBySubjects = await this.dataHelper.GetMarksBySubjects();

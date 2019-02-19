@@ -7,7 +7,8 @@ namespace MarkCalculator2
 {
     public class ThemeCollors
     {
-        public static string NavigationColor = "#1171d7";
+        public static string DefaultNavigationColor = "#1976d3";
+        public static string BackgroundClassic = "#eeeeee";
 
         public static Color StringToColor(string stringColor)
         {

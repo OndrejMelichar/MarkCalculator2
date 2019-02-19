@@ -25,7 +25,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Grid.Row="0" Grid.Column="0" x:Name="navigationLeft" Image="Resources/drawable/arrow_back_icon_56.png" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" BorderColor="Transparent" Clicked="backClicked"/>
-                <Label Grid.Row="0" Grid.Column="1" x:Name="navigationCenter" VerticalOptions="FillAndExpand" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontFamily="sans-serif-medium" FontSize="22" TextColor="Black" />
+                <Label Grid.Row="0" Grid.Column="1" x:Name="navigationCenter" VerticalOptions="FillAndExpand" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontFamily="sans-serif-medium" FontSize="22" TextColor="White" />
                 <Button Grid.Row="0" Grid.Column="2" x:Name="navigationRight" Image="Resources/drawable/plus_icon_56.png" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" BorderColor="Transparent" Clicked="addMarkClicked"/>
             </Grid>
 
@@ -47,7 +47,7 @@
 
                                 <Label Text="{Binding MarkValue}" Grid.Row="0" Grid.Column="0" FontFamily="Roboto" FontSize="Medium" TextColor="Black" VerticalTextAlignment="Center" />
                                 <Label Text="{Binding MarkWeight}" Grid.Row="0" Grid.Column="1" FontFamily="Roboto" FontSize="Medium" TextColor="#424242" VerticalTextAlignment="Center" />
-                                <Button Grid.Row="0" Grid.Column="2" x:Name="navigationLeft" Image="Resources/drawable/delete_icon_56.png" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" BorderColor="Transparent" Clicked="deleteMarkClicked" />
+                                <Button Grid.Row="0" Grid.Column="2" x:Name="navigationLeft" Image="Resources/drawable/clean_icon_56.png" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" BorderColor="Transparent" Clicked="deleteMarkClicked" />
 
                             </Grid>
                         </ViewCell>

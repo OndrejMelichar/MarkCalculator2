@@ -6,6 +6,7 @@ namespace Entities
 {
     public class MarkListViewItem
     {
+        public int MarkId { get; set; }
         public float MarkValue { get; set; }
         public float MarkWeight { get; set; }
     }

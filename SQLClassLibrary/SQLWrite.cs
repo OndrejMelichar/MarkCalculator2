@@ -34,6 +34,16 @@ namespace SQLClassLibrary
         {
             await databaseConnection.InsertAsync(subject);
         }
+
+        public async Task DeleteSubject(Subject subject)
+        {
+            await databaseConnection.DeleteAsync<Mark>(subject.SubjectId);
+        }
+
+        public async Task DeleteMark(Mark mark)
+        {
+            await databaseConnection.DeleteAsync<Mark>(mark.MarkId);
+        }
         
     }
 }
