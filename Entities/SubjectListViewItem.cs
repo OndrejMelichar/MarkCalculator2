@@ -8,6 +8,6 @@ namespace Entities
     {
         public string SubjectName { get; set; }
         public int SubjectId { get; set; }
-        public float Average { get; set; }
+        public string Average { get; set; }
     }
 }

@@ -31,10 +31,18 @@ namespace Provider
 
         public async Task AddMark(Mark mark, Subject subject)
         {
-            /*List<Mark> marks = await this.GetSubjectMarks(subject);
-            marks.Add(mark);
-            float average = this.GetMarksAverage(marks);*/
             await this.dataHelper.AddMark(mark, subject);
+            await this.updateAverage(subject);
+        }
+
+        private async Task updateAverage(Subject subject)
+        {
+            List<Mark> marks = await this.GetSubjectMarks(subject);
+            float average = this.GetMarksAverage(marks);
+            int subjectId = this.dataHelper.GetSubjectListId(subject);
+            SubjectListViewItem oldItem = StudentBook.SubjectsObservable[subjectId];
+            StudentBook.SubjectsObservable.Insert(subjectId, new SubjectListViewItem() { SubjectId = oldItem.SubjectId, SubjectName = oldItem.SubjectName, Average = average.ToString("0.00") });
+            StudentBook.SubjectsObservable.RemoveAt(subjectId + 1);
         }
 
         public async Task DeleteSubject(Subject subject)
@@ -47,12 +55,16 @@ namespace Provider
             await this.dataHelper.DeleteMark(mark);
         }
 
-        public async Task<List<Mark>> GetSubjectMarks(Subject subject)
+        public async Task<List<Mark>> GetSubjectMarks(Subject subject, bool firstLoad = false)
         {
-            Dictionary<Subject, List<Mark>> marksBySubjects = await this.dataHelper.GetMarksBySubjects();
-            List<List<Mark>> marks = new List<List<Mark>>(marksBySubjects.Values);
-            int index = this.dataHelper.GetSubjectListId(subject);
-            return marks[index];
+            List<Mark> subjectMarks = await this.dataHelper.GetSubjectMarks(subject);
+
+            if (firstLoad)
+            {
+                await this.updateAverage(subject);
+            }
+            
+            return subjectMarks;
         }
 
         public async Task<Status> GetSubjectStatus(Subject subject)

@@ -34,9 +34,7 @@ namespace MarkCalculator2
 
             foreach (Subject subject in subjects)
             {
-                List<Mark> marks = await this.studentBook.GetSubjectMarks(subject);
-                float average = this.studentBook.GetMarksAverage(marks);
-                StudentBook.SubjectsObservable.Add(new SubjectListViewItem() { SubjectId = subject.SubjectId, SubjectName = subject.Name, Average = average });
+                await this.studentBook.GetSubjectMarks(subject, true);
             }
         }
 

@@ -28,9 +28,20 @@ namespace MarkCalculator2
                 await this.displayMarks();
             }).ConfigureAwait(true);
 
-            navigationCenter.Text = this.subject.Name;
+            navigationCenter.Text = this.normalizeSubjectName(this.subject.Name);
             navigationGrid.BackgroundColor = ThemeCollors.StringToColor(ThemeCollors.DefaultNavigationColor);
             marksListView.ItemsSource = StudentBook.SubjectMarksObservable;
+        }
+
+        private string normalizeSubjectName(string name)
+        {
+            if (name.Length >= 15)
+            {
+                name = name.Substring(0, 12);
+                name += "...";
+            }
+
+            return name;
         }
 
         private async Task displayMarks()

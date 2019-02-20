@@ -13,7 +13,6 @@ namespace Provider
 
         private List<Subject> subjects = new List<Subject>();
         private List<Mark> marks = new List<Mark>();
-        private Dictionary<Subject, List<Mark>> MarksBySubjects = new Dictionary<Subject, List<Mark>>();
 
         public async Task AddSubject(Subject subject, bool saveToDB = true)
         {
@@ -27,8 +26,7 @@ namespace Provider
             }
 
             this.subjects.Add(subject);
-            this.MarksBySubjects.Add(subject, new List<Mark>());
-            StudentBook.SubjectsObservable.Add(new SubjectListViewItem() { SubjectName = subject.Name, SubjectId = subject.SubjectId, Average = 0f } );
+            StudentBook.SubjectsObservable.Add(new SubjectListViewItem() { SubjectName = subject.Name, SubjectId = subject.SubjectId, Average = "0" } );
         }
 
         public async Task AddMark(Mark mark, Subject subject, bool saveToDB = true)
@@ -44,16 +42,14 @@ namespace Provider
             }
             
             this.marks.Add(mark);
-            Subject subjx = this.getSubjectById(subject.SubjectId);
-            this.MarksBySubjects[subjx].Add(mark);
             int subjectListId = this.GetSubjectListId(subject);
             StudentBook.SubjectMarksObservable.Add(new MarkListViewItem() { MarkValue = mark.Value, MarkWeight = mark.Weight, MarkId = mark.MarkId });
-            StudentBook.SubjectsObservable[subjectListId] = new SubjectListViewItem() { SubjectName = subject.Name, SubjectId = subject.SubjectId, Average = 0f };
+            StudentBook.SubjectsObservable[subjectListId] = new SubjectListViewItem() { SubjectName = subject.Name, SubjectId = subject.SubjectId, Average = "0" };
         }
 
         public async Task DeleteSubject(Subject subject)
         {
-            List<Mark> subjectMarks = await this.getSubjectMarks(subject);
+            List<Mark> subjectMarks = await this.GetSubjectMarks(subject);
 
             foreach (Mark mark in subjectMarks)
             {
@@ -64,7 +60,6 @@ namespace Provider
             SQLWrite SQLWrite = await writeFactory.GetInstance(DataHelper.DatabaseName);
             await SQLWrite.DeleteSubject(subject);
             this.subjects.Remove(subject);
-            this.MarksBySubjects.Remove(subject);
             StudentBook.SubjectsObservable.Remove(new SubjectListViewItem() { SubjectName = subject.Name, SubjectId = subject.SubjectId});
         }
 
@@ -75,7 +70,6 @@ namespace Provider
             await SQLWrite.DeleteMark(mark);
             this.marks.Remove(mark);
             Subject subject = this.getSubjectById(mark.SubjectId);
-            this.MarksBySubjects[subject].Remove(mark);
             StudentBook.SubjectMarksObservable.Remove(new MarkListViewItem() { MarkId = mark.MarkId, MarkValue = mark.Value, MarkWeight = mark.Weight });
         }
 
@@ -96,26 +90,7 @@ namespace Provider
             return this.subjects;
         }
 
-        public async Task<Dictionary<Subject, List<Mark>>> GetMarksBySubjects()
-        {
-            if (this.MarksBySubjects.Count == 0)
-            {
-                List<Subject> SQLSubjects = await this.GetSubjects();
-                Dictionary<Subject, List<Mark>> allMarksBySubjects = new Dictionary<Subject, List<Mark>>();
-
-                foreach (Subject subject in SQLSubjects)
-                {
-                    List<Mark> subjectMarks = await this.getSubjectMarks(subject);
-                    allMarksBySubjects.Add(subject, subjectMarks);
-                }
-
-                return allMarksBySubjects;
-            }
-
-            return this.MarksBySubjects;
-        }
-
-        private async Task<List<Mark>> getSubjectMarks(Subject subjectPattern)
+        public async Task<List<Mark>> GetSubjectMarks(Subject subjectPattern)
         {
             List<Mark> subjectMarks = new List<Mark>();
             List<Mark> allMarks = await this.getMarks();
