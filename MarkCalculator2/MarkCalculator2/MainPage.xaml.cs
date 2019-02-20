@@ -30,11 +30,14 @@ namespace MarkCalculator2
 
         private async Task displaySubjects()
         {
-            //await this.deleteAll();
-
             List<Subject> subjects = await this.studentBook.GetSubjects();
-            StudentBook.SubjectsObservable = await this.subjectsToListViewCollection(subjects);
-            //
+
+            foreach (Subject subject in subjects)
+            {
+                List<Mark> marks = await this.studentBook.GetSubjectMarks(subject);
+                float average = this.studentBook.GetMarksAverage(marks);
+                StudentBook.SubjectsObservable.Add(new SubjectListViewItem() { SubjectId = subject.SubjectId, SubjectName = subject.Name, Average = average });
+            }
         }
 
         private async Task deleteAll()
@@ -45,20 +48,6 @@ namespace MarkCalculator2
             {
                 await this.studentBook.DeleteSubject(subjectx);
             }
-        }
-
-        private async Task<ObservableCollection<SubjectListViewItem>> subjectsToListViewCollection(List<Subject> subjects)
-        {
-            ObservableCollection<SubjectListViewItem> collection = new ObservableCollection<SubjectListViewItem>();
-
-            foreach (Subject subject in subjects)
-            {
-                List<Mark> marks = await this.studentBook.GetSubjectMarks(subject);
-                float average = this.studentBook.GetMarksAverage(marks);
-                collection.Add(new SubjectListViewItem() { SubjectId = subject.SubjectId, SubjectName = subject.Name, Average = average });
-            }
-
-            return collection;
         }
 
         private async void subjectTapped(object sender, EventArgs e)

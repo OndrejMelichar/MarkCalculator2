@@ -30,25 +30,18 @@ namespace MarkCalculator2
 
             navigationCenter.Text = this.subject.Name;
             navigationGrid.BackgroundColor = ThemeCollors.StringToColor(ThemeCollors.DefaultNavigationColor);
+            marksListView.ItemsSource = StudentBook.SubjectMarksObservable;
         }
 
         private async Task displayMarks()
         {
+            StudentBook.SubjectMarksObservable.Clear();
             List<Mark> marks = await this.studentBook.GetSubjectMarks(this.subject);
-            StudentBook.SubjectMarksObservable = this.marksToListViewCollection(marks);
-            marksListView.ItemsSource = StudentBook.SubjectMarksObservable;
-        }
-
-        private ObservableCollection<MarkListViewItem> marksToListViewCollection(List<Mark> marks)
-        {
-            ObservableCollection<MarkListViewItem> collection = new ObservableCollection<MarkListViewItem>();
 
             foreach (Mark mark in marks)
             {
-                collection.Add(new MarkListViewItem() { MarkValue = mark.Value, MarkWeight = mark.Weight });
+                StudentBook.SubjectMarksObservable.Add(new MarkListViewItem() { MarkValue = mark.Value, MarkWeight = mark.Weight });
             }
-
-            return collection;
         }
 
         private async void backClicked(object sender, EventArgs e)

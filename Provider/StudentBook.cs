@@ -31,17 +31,15 @@ namespace Provider
 
         public async Task AddMark(Mark mark, Subject subject)
         {
-            List<Mark> marks = await this.GetSubjectMarks(subject);
+            /*List<Mark> marks = await this.GetSubjectMarks(subject);
             marks.Add(mark);
-            float average = this.GetMarksAverage(marks);
+            float average = this.GetMarksAverage(marks);*/
             await this.dataHelper.AddMark(mark, subject);
         }
 
         public async Task DeleteSubject(Subject subject)
         {
-            List<Mark> subjectMarks = await this.GetSubjectMarks(subject);
-            float average = this.GetMarksAverage(subjectMarks);
-            await this.dataHelper.DeleteSubject(subject, average);
+            await this.dataHelper.DeleteSubject(subject);
         }
 
         public async Task DeleteMark(Mark mark)

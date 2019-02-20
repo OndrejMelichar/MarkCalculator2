@@ -27,22 +27,32 @@ namespace ConsoleDebugApp
 
             await this.displaySubjects();
 
-            /*Subject s1 = new Subject() { Name = "politologie" };
+            Subject s1 = new Subject() { Name = "politologie" };
             Subject s2 = new Subject() { Name = "sociologie" };
+            Subject s3 = new Subject() { Name = "makroekonomie" };
             Mark m1 = new Mark() { Value = 1, Weight = 30 };
             Mark m2 = new Mark() { Value = 2, Weight = 30 };
             Mark m3 = new Mark() { Value = 3, Weight = 30 };
             Mark m4 = new Mark() { Value = 4, Weight = 30 };
             Mark m5 = new Mark() { Value = 5, Weight = 30 };
-            await this.studentBook.AddSubject(s1);
+            /*await this.studentBook.AddSubject(s1);
             await this.studentBook.AddSubject(s2);
             await this.studentBook.AddMark(m1, s1);
             await this.studentBook.AddMark(m2, s2);
-            await this.studentBook.AddMark(m3, s1);*/
+            await this.studentBook.AddMark(m3, s1);
+            await this.studentBook.AddSubject(s3);*/
 
             foreach (SubjectListViewItem subjectItem in StudentBook.SubjectsObservable)
             {
-                Console.WriteLine("> " + subjectItem.SubjectName + " (" + subjectItem.Average + ");");
+                Console.Write("> " + subjectItem.SubjectName + " (" + subjectItem.Average + ") [");
+                List<Mark> subjectMarks = await this.studentBook.GetSubjectMarks(new Subject() { Name = subjectItem.SubjectName, SubjectId = subjectItem.SubjectId });
+
+                foreach (Mark mark in subjectMarks)
+                {
+                    Console.Write(mark.Value + " (" + mark.Weight + "); ");
+                }
+
+                Console.Write("];\n");
             }
         }
 
