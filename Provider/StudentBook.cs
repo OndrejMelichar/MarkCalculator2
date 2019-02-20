@@ -34,7 +34,7 @@ namespace Provider
             List<Mark> marks = await this.GetSubjectMarks(subject);
             marks.Add(mark);
             float average = this.GetMarksAverage(marks);
-            await this.dataHelper.AddMark(mark, subject, average);
+            await this.dataHelper.AddMark(mark, subject);
         }
 
         public async Task DeleteSubject(Subject subject)
