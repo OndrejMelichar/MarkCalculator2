@@ -44,7 +44,8 @@ namespace Provider
             }
             
             this.marks.Add(mark);
-            this.MarksBySubjects[subject].Add(mark);
+            Subject subjx = this.getSubjectById(subject.SubjectId);
+            this.MarksBySubjects[subjx].Add(mark);
             int subjectListId = this.GetSubjectListId(subject);
             StudentBook.SubjectMarksObservable.Add(new MarkListViewItem() { MarkValue = mark.Value, MarkWeight = mark.Weight, MarkId = mark.MarkId });
             StudentBook.SubjectsObservable[subjectListId] = new SubjectListViewItem() { SubjectName = subject.Name, SubjectId = subject.SubjectId, Average = 0f };
