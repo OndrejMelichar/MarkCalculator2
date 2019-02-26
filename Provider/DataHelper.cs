@@ -44,10 +44,10 @@ namespace Provider
             this.marks.Add(mark);
             int subjectListId = this.GetSubjectListId(subject);
             StudentBook.SubjectMarksObservable.Add(new MarkListViewItem() { MarkValue = mark.Value, MarkWeight = mark.Weight, MarkId = mark.MarkId });
-            StudentBook.SubjectsObservable[subjectListId] = new SubjectListViewItem() { SubjectName = subject.Name, SubjectId = subject.SubjectId, Average = "0" };
+            StudentBook.SubjectsObservable[subjectListId] = new SubjectListViewItem() { SubjectName = subject.Name, SubjectId = subject.SubjectId, Average = "0,00" };
         }
 
-        public async Task DeleteSubject(Subject subject)
+        public async Task DeleteSubject(Subject subject, float averange)
         {
             List<Mark> subjectMarks = await this.GetSubjectMarks(subject);
 
@@ -56,11 +56,12 @@ namespace Provider
                 await this.DeleteMark(mark);
             }
 
+            int subjectListId = this.GetSubjectListId(subject);
             SQLWriteFactory writeFactory = new SQLWriteFactory();
             SQLWrite SQLWrite = await writeFactory.GetInstance(DataHelper.DatabaseName);
             await SQLWrite.DeleteSubject(subject);
             this.subjects.Remove(subject);
-            StudentBook.SubjectsObservable.Remove(new SubjectListViewItem() { SubjectName = subject.Name, SubjectId = subject.SubjectId});
+            StudentBook.SubjectsObservable.RemoveAt(subjectListId);
         }
 
         public async Task DeleteMark(Mark mark)

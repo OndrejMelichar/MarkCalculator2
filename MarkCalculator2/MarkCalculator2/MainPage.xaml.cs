@@ -38,16 +38,6 @@ namespace MarkCalculator2
             }
         }
 
-        private async Task deleteAll()
-        {
-            List<Subject> subjectsx = await this.studentBook.GetSubjects();
-
-            foreach (Subject subjectx in subjectsx)
-            {
-                await this.studentBook.DeleteSubject(subjectx);
-            }
-        }
-
         private async void subjectTapped(object sender, EventArgs e)
         {
             ViewCell viewCell = ((ViewCell)sender);

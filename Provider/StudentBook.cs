@@ -47,7 +47,9 @@ namespace Provider
 
         public async Task DeleteSubject(Subject subject)
         {
-            await this.dataHelper.DeleteSubject(subject);
+            List<Mark> subjectMarks = await this.GetSubjectMarks(subject);
+            float averange = this.GetMarksAverage(subjectMarks);
+            await this.dataHelper.DeleteSubject(subject, averange);
         }
 
         public async Task DeleteMark(Mark mark)
