@@ -43,11 +43,11 @@
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="48" />
+                                    <ColumnDefinition Width="60" />
                                 </Grid.ColumnDefinitions>
 
-                                <Label Text="{Binding SubjectName}" x:Name="ViewCellLabel" Grid.Row="0" Grid.Column="0" FontFamily="Roboto" FontSize="Medium" TextColor="Black" VerticalTextAlignment="Center" />
-                                <Label Text="{Binding Average}" Grid.Row="0" Grid.Column="1" FontFamily="Roboto" FontSize="Medium" TextColor="#424242" VerticalTextAlignment="Center" />
+                                <Label Text="{Binding SubjectName}" x:Name="ViewCellLabel" Grid.Row="0" Grid.Column="0" Margin="24,0,0,0" FontFamily="Roboto" FontSize="Medium" TextColor="Black" VerticalTextAlignment="Center" />
+                                <Label Text="{Binding Average}" Grid.Row="0" Grid.Column="1" FontFamily="Roboto" FontSize="Medium" TextColor="#757575" VerticalTextAlignment="Center" />
 
                             </Grid>
                         </ViewCell>

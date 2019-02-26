@@ -35,17 +35,33 @@ namespace MarkCalculator2
             return false;
         }
 
+        private bool newMarkWeightChect(float weight)
+        {
+            if (weight >= 1 && weight <= 100)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         private async void newMarkButtonClicked(object sender, EventArgs e)
         {
-            float newMarkValue;
-            int newMarkWeight;
-            bool parse1 = float.TryParse(newMarkValueEntry.Text, out newMarkValue);
-            bool parse2 = int.TryParse(newMarkWeightEntry.Text, out newMarkWeight);
+            string stringNewMarkValue = newMarkValueEntry.Text;
+            string stringNewMarkWeight = newMarkWeightEntry.Text;
 
-            if (parse1 && parse2 && this.newMarkValueCheck(newMarkValue))
+            if (!string.IsNullOrEmpty(stringNewMarkValue) && !string.IsNullOrEmpty(stringNewMarkWeight))
             {
-                await this.studentBook.AddMark(new Mark() { Value = newMarkValue, Weight = newMarkWeight }, this.subject);
-                await this.Navigation.PopModalAsync();
+                float newMarkValue;
+                int newMarkWeight;
+                bool parse1 = float.TryParse(stringNewMarkValue, out newMarkValue);
+                bool parse2 = int.TryParse(stringNewMarkWeight, out newMarkWeight);
+
+                if (parse1 && parse2 && this.newMarkValueCheck(newMarkValue) && this.newMarkWeightChect(newMarkWeight))
+                {
+                    await this.studentBook.AddMark(new Mark() { Value = newMarkValue, Weight = newMarkWeight }, this.subject);
+                    await this.Navigation.PopModalAsync();
+                }
             }
         }
 

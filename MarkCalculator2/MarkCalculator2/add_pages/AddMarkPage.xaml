@@ -28,7 +28,7 @@
                 <Label Grid.Row="0" Grid.Column="1" Text="Přidat známku" VerticalOptions="FillAndExpand" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontFamily="sans-serif-medium" FontSize="22" TextColor="White" />
             </Grid>
 
-            <StackLayout Grid.Row="1" Grid.Column="0">
+            <StackLayout Grid.Row="1" Grid.Column="0" Margin="24,0,24,0">
                 <Entry x:Name="newMarkValueEntry" Placeholder="Nová známka" />
                 <Entry x:Name="newMarkWeightEntry" Placeholder="Celočíselná váha nové známky" />
                 <Button x:Name="newMarkButton" Text="Uložit známku" Clicked="newMarkButtonClicked" />

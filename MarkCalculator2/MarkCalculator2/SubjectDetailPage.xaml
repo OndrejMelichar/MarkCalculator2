@@ -40,14 +40,12 @@
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="48" />
-                                    <ColumnDefinition Width="48" />
-                                    <ColumnDefinition Width="48" />
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
-                                <Label Text="{Binding MarkValue}" Grid.Row="0" Grid.Column="0" FontFamily="Roboto" FontSize="Medium" TextColor="Black" VerticalTextAlignment="Center" />
-                                <Label Text="{Binding MarkWeight}" Grid.Row="0" Grid.Column="1" FontFamily="Roboto" FontSize="Medium" TextColor="#424242" VerticalTextAlignment="Center" />
-                                <Button Grid.Row="0" Grid.Column="2" x:Name="navigationLeft" Image="Resources/drawable/clean_icon_56.png" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" BorderColor="Transparent" Clicked="deleteMarkClicked" />
+                                <Label Text="{Binding MarkValue}" Grid.Row="0" Grid.Column="0" Margin="24,0,0,0" FontFamily="Roboto" FontSize="Medium" TextColor="Black" VerticalTextAlignment="Center" />
+                                <Label Text="{Binding MarkWeight}" Grid.Row="0" Grid.Column="1" Margin="24,0,0,0" FontFamily="Roboto" FontSize="Medium" TextColor="#757575" VerticalTextAlignment="Center" />
 
                             </Grid>
                         </ViewCell>

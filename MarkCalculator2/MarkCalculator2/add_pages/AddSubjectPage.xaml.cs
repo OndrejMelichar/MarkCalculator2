@@ -27,7 +27,7 @@ namespace MarkCalculator2
         {
             bool subjectExists = await this.studentBook.SubjectNameExists(name);
 
-            if (!subjectExists && name.Length <= 28)
+            if (!subjectExists && name.Length != 0 && name.Length <= 28)
             {
                 return true;
             }
@@ -37,13 +37,19 @@ namespace MarkCalculator2
 
         private async void addSubjectButtonClicked(object sender, EventArgs e)
         {
-            string newSubjectName = this.studentBook.NormalizeSubjectName(newSubjectNameEntry.Text);
-            bool checkResult = await this.newSubjectNameCheck(newSubjectName);
+            string newSubjectName = newSubjectNameEntry.Text;
 
-            if (checkResult)
+            if (!string.IsNullOrEmpty(newSubjectName) && !string.IsNullOrEmpty(newSubjectName.Trim()))
             {
-                await this.studentBook.AddSubject(new Subject() { Name = newSubjectName });
-                await this.Navigation.PopModalAsync();
+                newSubjectName = newSubjectName.Trim();
+                newSubjectName = this.studentBook.NormalizeSubjectName(newSubjectName);
+                bool checkResult = await this.newSubjectNameCheck(newSubjectName);
+
+                if (checkResult)
+                {
+                    await this.studentBook.AddSubject(new Subject() { Name = newSubjectName });
+                    await this.Navigation.PopModalAsync();
+                }
             }
         }
 

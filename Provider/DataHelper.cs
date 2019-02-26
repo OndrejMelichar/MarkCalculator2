@@ -26,7 +26,7 @@ namespace Provider
             }
 
             this.subjects.Add(subject);
-            StudentBook.SubjectsObservable.Add(new SubjectListViewItem() { SubjectName = subject.Name, SubjectId = subject.SubjectId, Average = "0" } );
+            StudentBook.SubjectsObservable.Add(new SubjectListViewItem() { SubjectName = subject.Name, SubjectId = subject.SubjectId, Average = "0,00" } );
         }
 
         public async Task AddMark(Mark mark, Subject subject, bool saveToDB = true)
