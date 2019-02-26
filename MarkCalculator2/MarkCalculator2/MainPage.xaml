@@ -50,6 +50,7 @@
                                     <BoxView.GestureRecognizers>
                                         <SwipeGestureRecognizer Direction="Left" Swiped="OnSwiped"/>
                                         <SwipeGestureRecognizer Direction="Right" Swiped="OnSwiped"/>
+                                        <TapGestureRecognizer Tapped="subjectTapped" />
                                     </BoxView.GestureRecognizers>
                                 </BoxView>
                                 

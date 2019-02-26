@@ -44,6 +44,13 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
+                                <BoxView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                                    <BoxView.GestureRecognizers>
+                                        <SwipeGestureRecognizer Direction="Left" Swiped="OnSwiped"/>
+                                        <SwipeGestureRecognizer Direction="Right" Swiped="OnSwiped"/>
+                                    </BoxView.GestureRecognizers>
+                                </BoxView>
+
                                 <Label Text="{Binding MarkValue}" Grid.Row="0" Grid.Column="0" Margin="24,0,0,0" FontFamily="Roboto" FontSize="Medium" TextColor="Black" VerticalTextAlignment="Center" />
                                 <Label Text="{Binding MarkWeight}" Grid.Row="0" Grid.Column="1" Margin="24,0,0,0" FontFamily="Roboto" FontSize="Medium" TextColor="#757575" VerticalTextAlignment="Center" />
 

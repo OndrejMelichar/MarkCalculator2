@@ -38,9 +38,20 @@ namespace MarkCalculator2
             }
         }
 
-        private async void subjectTapped(object sender, EventArgs e)
+        /*private async void subjectTapped(object sender, EventArgs e)
         {
             ViewCell viewCell = ((ViewCell)sender);
+            Grid grid = viewCell.FindByName<Grid>("ViewCellGrid");
+            SubjectListViewItem subjectListViewItem = (SubjectListViewItem)viewCell.BindingContext;
+            grid.BackgroundColor = ThemeCollors.StringToColor(ThemeCollors.BackgroundClassic);
+            Subject subject = new Subject() { Name = subjectListViewItem.SubjectName, SubjectId = subjectListViewItem.SubjectId };
+            await Navigation.PushModalAsync(new SubjectDetailPage(subject, this.studentBook));
+        }*/
+
+        private async void subjectTapped(object sender, SwipedEventArgs e)
+        {
+            BoxView boxView = (BoxView)sender;
+            ViewCell viewCell = (ViewCell)boxView.Parent.Parent;
             Grid grid = viewCell.FindByName<Grid>("ViewCellGrid");
             SubjectListViewItem subjectListViewItem = (SubjectListViewItem)viewCell.BindingContext;
             grid.BackgroundColor = ThemeCollors.StringToColor(ThemeCollors.BackgroundClassic);

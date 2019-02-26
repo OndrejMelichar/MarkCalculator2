@@ -60,18 +60,22 @@ namespace Provider
             SQLWriteFactory writeFactory = new SQLWriteFactory();
             SQLWrite SQLWrite = await writeFactory.GetInstance(DataHelper.DatabaseName);
             await SQLWrite.DeleteSubject(subject);
-            this.subjects.Remove(subject);
+            this.subjects.RemoveAt(subjectListId);
             StudentBook.SubjectsObservable.RemoveAt(subjectListId);
         }
 
-        public async Task DeleteMark(Mark mark)
+        public async Task DeleteMark(Mark mark, float average = 0f)
         {
+            int markObservableListId = this.GetMarkObservableListId(mark);
+            int markListId = this.GetMarkListId(mark);
             SQLWriteFactory writeFactory = new SQLWriteFactory();
             SQLWrite SQLWrite = await writeFactory.GetInstance(DataHelper.DatabaseName);
             await SQLWrite.DeleteMark(mark);
-            this.marks.Remove(mark);
-            Subject subject = this.getSubjectById(mark.SubjectId);
-            StudentBook.SubjectMarksObservable.Remove(new MarkListViewItem() { MarkId = mark.MarkId, MarkValue = mark.Value, MarkWeight = mark.Weight });
+            this.marks.RemoveAt(markListId);
+            Subject subject = this.GetSubjectById(mark.SubjectId);
+            int subjectListId = this.GetSubjectListId(subject);
+            StudentBook.SubjectMarksObservable.RemoveAt(markObservableListId);
+            StudentBook.SubjectsObservable[subjectListId] = new SubjectListViewItem() { SubjectName = subject.Name, SubjectId = subject.SubjectId, Average = average.ToString("0.00") };
         }
 
         public async Task<List<Subject>> GetSubjects()
@@ -115,7 +119,7 @@ namespace Provider
 
                 foreach (Mark mark in allMarks)
                 {
-                    Subject subject = this.getSubjectById(mark.SubjectId);
+                    Subject subject = this.GetSubjectById(mark.SubjectId);
                     await this.AddMark(mark, subject, false);
                 }
                 
@@ -141,7 +145,7 @@ namespace Provider
             return SQLMarks;
         }
 
-        private Subject getSubjectById(int subjectId)
+        public Subject GetSubjectById(int subjectId)
         {
             foreach (Subject subject in this.subjects)
             {
@@ -174,9 +178,33 @@ namespace Provider
         {
             for (int i = 0; i < this.subjects.Count; i++)
             {
-                Subject subject = this.subjects[i];
+                if (this.subjects[i].SubjectId == searchedSubject.SubjectId)
+                {
+                    return i;
+                }
+            }
 
-                if (subject.SubjectId == searchedSubject.SubjectId && subject.Name == searchedSubject.Name)
+            return -1;
+        }
+
+        public int GetMarkListId(Mark searchedMark)
+        {
+            for (int i = 0; i < this.marks.Count; i++)
+            {
+                if (this.marks[i].MarkId == searchedMark.MarkId)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        public int GetMarkObservableListId(Mark searchedMark)
+        {
+            for (int i = 0; i < StudentBook.SubjectMarksObservable.Count; i++)
+            {
+                if (StudentBook.SubjectMarksObservable[i].MarkId == searchedMark.MarkId)
                 {
                     return i;
                 }

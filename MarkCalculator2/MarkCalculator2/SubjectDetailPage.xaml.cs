@@ -51,7 +51,7 @@ namespace MarkCalculator2
 
             foreach (Mark mark in marks)
             {
-                StudentBook.SubjectMarksObservable.Add(new MarkListViewItem() { MarkValue = mark.Value, MarkWeight = mark.Weight });
+                StudentBook.SubjectMarksObservable.Add(new MarkListViewItem() { MarkId = mark.MarkId, SubjectId = mark.SubjectId, MarkValue = mark.Value, MarkWeight = mark.Weight });
             }
         }
 
@@ -65,9 +65,13 @@ namespace MarkCalculator2
             await Navigation.PushModalAsync(new AddMarkPage(this.subject, this.studentBook));
         }
 
-        private void deleteMarkClicked(object sender, EventArgs e)
+        private async void OnSwiped(object sender, SwipedEventArgs e)
         {
-            
+            BoxView boxView = (BoxView)sender;
+            ViewCell viewCell = (ViewCell)boxView.Parent.Parent;
+            MarkListViewItem markListViewItem = (MarkListViewItem)viewCell.BindingContext;
+            var pom = markListViewItem;
+            await this.studentBook.DeleteMark(new Mark() { MarkId = markListViewItem.MarkId, SubjectId = markListViewItem.SubjectId });
         }
     }
 }

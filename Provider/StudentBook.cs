@@ -55,6 +55,8 @@ namespace Provider
         public async Task DeleteMark(Mark mark)
         {
             await this.dataHelper.DeleteMark(mark);
+            Subject subject = this.dataHelper.GetSubjectById(mark.SubjectId);
+            await this.updateAverage(subject);
         }
 
         public async Task<List<Mark>> GetSubjectMarks(Subject subject, bool firstLoad = false)
@@ -109,15 +111,18 @@ namespace Provider
             return Status.Passed;
         }
 
-        public float GetMarksAverage(List<Mark> marks)
+        public float GetMarksAverage(List<Mark> marks, Mark skipMark = null)
         {
             float marksWeightsSum = 0;
             int weightsSum = 0;
 
             foreach (Mark mark in marks)
             {
-                marksWeightsSum += mark.Value * mark.Weight;
-                weightsSum += mark.Weight;
+                if (skipMark == null || skipMark.MarkId != mark.MarkId)
+                {
+                    marksWeightsSum += mark.Value * mark.Weight;
+                    weightsSum += mark.Weight;
+                }
             }
 
             if (marks.Count != 0)
