@@ -52,5 +52,13 @@ namespace MarkCalculator2
         {
             await Navigation.PushModalAsync(new AddSubjectPage(this.studentBook));
         }
+
+        private async void OnSwiped(object sender, SwipedEventArgs e)
+        {
+            BoxView boxView = (BoxView)sender;
+            ViewCell viewCell = (ViewCell)boxView.Parent.Parent;
+            SubjectListViewItem subjectListViewItem = (SubjectListViewItem)viewCell.BindingContext;
+            await this.studentBook.DeleteSubject(new Subject() { SubjectId = subjectListViewItem.SubjectId, Name = subjectListViewItem.SubjectName } );
+        }
     }
 }

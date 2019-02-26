@@ -23,24 +23,18 @@ namespace ConsoleDebugApp
 
         private async Task startAsync()
         {
-            //await this.deleteAll();
-
             await this.displaySubjects();
 
-            Subject s1 = new Subject() { Name = "politologie" };
-            Subject s2 = new Subject() { Name = "sociologie" };
-            Subject s3 = new Subject() { Name = "makroekonomie" };
+            Subject s1 = new Subject() { Name = "politologie2" };
+            Subject s2 = new Subject() { Name = "sociologie2" };
             Mark m1 = new Mark() { Value = 1, Weight = 30 };
-            Mark m2 = new Mark() { Value = 2, Weight = 30 };
-            Mark m3 = new Mark() { Value = 3, Weight = 30 };
-            Mark m4 = new Mark() { Value = 4, Weight = 30 };
-            Mark m5 = new Mark() { Value = 5, Weight = 30 };
+            Mark m2 = new Mark() { Value = 2, Weight = 40 };
             /*await this.studentBook.AddSubject(s1);
             await this.studentBook.AddSubject(s2);
             await this.studentBook.AddMark(m1, s1);
-            await this.studentBook.AddMark(m2, s2);
-            await this.studentBook.AddMark(m3, s1);
-            await this.studentBook.AddSubject(s3);*/
+            await this.studentBook.AddMark(m2, s1);*/
+
+            await this.studentBook.DeleteSubject(s1);
 
             foreach (SubjectListViewItem subjectItem in StudentBook.SubjectsObservable)
             {
@@ -80,7 +74,7 @@ namespace ConsoleDebugApp
             {
                 List<Mark> marks = await this.studentBook.GetSubjectMarks(subject);
                 float average = this.studentBook.GetMarksAverage(marks);
-                collection.Add(new SubjectListViewItem() { SubjectId = subject.SubjectId, SubjectName = subject.Name, Average = average });
+                collection.Add(new SubjectListViewItem() { SubjectId = subject.SubjectId, SubjectName = subject.Name, Average = average.ToString("0.00") });
             }
 
             return collection;

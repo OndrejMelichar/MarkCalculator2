@@ -37,7 +37,7 @@ namespace SQLClassLibrary
 
         public async Task DeleteSubject(Subject subject)
         {
-            await databaseConnection.DeleteAsync<Mark>(subject.SubjectId);
+            await databaseConnection.DeleteAsync<Subject>(subject.SubjectId);
         }
 
         public async Task DeleteMark(Mark mark)
