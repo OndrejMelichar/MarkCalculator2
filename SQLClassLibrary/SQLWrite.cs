@@ -42,7 +42,6 @@ namespace SQLClassLibrary
 
         public async Task DeleteMark(Mark mark)
         {
-            var pom = mark;
             await databaseConnection.DeleteAsync<Mark>(mark.MarkId);
         }
         

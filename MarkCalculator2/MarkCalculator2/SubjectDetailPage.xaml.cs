@@ -70,7 +70,6 @@ namespace MarkCalculator2
             BoxView boxView = (BoxView)sender;
             ViewCell viewCell = (ViewCell)boxView.Parent.Parent;
             MarkListViewItem markListViewItem = (MarkListViewItem)viewCell.BindingContext;
-            var pom = markListViewItem;
             await this.studentBook.DeleteMark(new Mark() { MarkId = markListViewItem.MarkId, SubjectId = markListViewItem.SubjectId });
         }
     }
