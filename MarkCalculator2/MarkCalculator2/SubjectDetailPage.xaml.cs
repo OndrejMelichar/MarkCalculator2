@@ -67,10 +67,13 @@ namespace MarkCalculator2
 
         private async void OnSwiped(object sender, SwipedEventArgs e)
         {
-            BoxView boxView = (BoxView)sender;
-            ViewCell viewCell = (ViewCell)boxView.Parent.Parent;
-            MarkListViewItem markListViewItem = (MarkListViewItem)viewCell.BindingContext;
-            await this.studentBook.DeleteMark(new Mark() { MarkId = markListViewItem.MarkId, SubjectId = markListViewItem.SubjectId });
+            if (true) // pokud element stále existuje
+            {
+                BoxView boxView = (BoxView)sender;
+                ViewCell viewCell = (ViewCell)boxView.Parent.Parent;
+                MarkListViewItem markListViewItem = (MarkListViewItem)viewCell.BindingContext;
+                await this.studentBook.DeleteMark(new Mark() { MarkId = markListViewItem.MarkId, SubjectId = markListViewItem.SubjectId });
+            }
         }
     }
 }
